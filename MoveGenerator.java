@@ -120,16 +120,24 @@ public class MoveGenerator
         int rank = 7 - startSquare / 8;
         int file = startSquare % 8;
 
-        long verticalMoves = (occupied - (2 * binaryStartSquare)) ^ 
-                              Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare));
-        verticalMoves = verticalMoves&files[file];
 
         long horizontalMoves = ((occupied - 2 * binaryStartSquare) ^
                               Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare)));
-       
         horizontalMoves = horizontalMoves & ranks[rank];
+        
+        //long verticalMoves = (occupied - (2 * binaryStartSquare)) ^ 
+            //                  Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare));
+        //verticalMoves = verticalMoves&files[file];
 
-        //BoardGenerator.drawPiece(horizontalMoves ^ verticalMoves);
+        long verticalMoves = ((occupied & files[file]) - (2 *binaryStartSquare)) ^
+                               Long.reverse(Long.reverse(occupied&files[file]) - (2 * Long.reverse(binaryStartSquare)));
+        verticalMoves = verticalMoves & files[file];
+
+        //long possibilitiesVertical = ((OCCUPIED&FileMasks8[s % 8]) - (2 * binaryS)) ^ Long.reverse(Long.reverse(OCCUPIED&FileMasks8[s % 8]) - (2 * Long.reverse(binaryS)));
+
+
+
+        BoardGenerator.drawPiece(verticalMoves ^ horizontalMoves);
 
         return(horizontalMoves ^ verticalMoves);
 
@@ -137,6 +145,20 @@ public class MoveGenerator
 
     public static long generateDiagonalMoves(Board board, int startSquare){
 
+        long occupied = board.GetBlackPieces() | board.GetWhitePieces();
+        int rank = startSquare / 8;
+        int file = startSquare % 8;
+
+        long binaryStartSquare = 1L << startSquare;
+
+        long diagonalMoves = ((occupied&diaginalMasks[rank + file]) - (2 * binaryStartSquare)) ^
+                                Long.reverse(Long.reverse(occupied&diaginalMasks[rank + file]) - (2 * Long.reverse(binaryStartSquare)));
+        diagonalMoves = diagonalMoves & diaginalMasks[rank + file];
+
+        BoardGenerator.drawPiece(diagonalMoves);
+
+
+        long antiDiagonalMoves;
 
         return 0;
     }

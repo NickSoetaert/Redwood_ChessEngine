@@ -6,8 +6,9 @@ public class Play{
         Board board = BoardGenerator.initStandardBoard();
 
 
+        MoveGenerator.generateVerticalHorizontalMoves(board, 42);
+        MoveGenerator. generateDiagonalMoves(board, 42);
 
-        MoveGenerator.generateVerticalHorizontalMoves(board, 06);
 
 
     }
