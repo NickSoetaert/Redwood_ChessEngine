@@ -29,6 +29,7 @@ public class MoveGenerator
 
     public static long generateWhitePawnMoves(Board board, String pastMove){
 
+
         long moves = 0L;
         long WP = board.get(BitBoardEnum.WP);
         long blackPieces = board.GetBlackPieces();
