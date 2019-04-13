@@ -97,14 +97,13 @@ public class BoardGenerator{
             }
 
         }
-
-        drawBoard(WP, WN, WB, WR, WQ, WK, BP, BN, BB, BR, BQ, BK);
-        return new Board(WP, WN, WB, WR, WQ, WK, BP, BN, BB, BR, BQ, BK);
+        Board curBoard = new Board(WP, WN, WB, WR, WQ, WK, BP, BN, BB, BR, BQ, BK);
+        drawBoard(curBoard);
+        return curBoard;
 
     }
 
-    public static void drawBoard(long WP, long WN, long WB, long WR, long WQ, long WK,
-                                 long BP, long BN, long BB, long BR, long BQ, long BK){
+    public static void drawBoard(Board curBoard){
 
         String chessBoard[][] = new String[8][8];
         
@@ -117,18 +116,18 @@ public class BoardGenerator{
              * Shift bits i bits to the right
              * After shift, if leading bit is a 1, there is a piece on the current square
              */
-            if(((WP>>i) & 1) == 1) {chessBoard[i/8][i%8] = "P";}
-            if(((WN>>i) & 1) == 1) {chessBoard[i/8][i%8] = "N";}
-            if(((WB>>i) & 1) == 1) {chessBoard[i/8][i%8] = "B";}
-            if(((WR>>i) & 1) == 1) {chessBoard[i/8][i%8] = "R";}
-            if(((WQ>>i) & 1) == 1) {chessBoard[i/8][i%8] = "Q";}
-            if(((WK>>i) & 1) == 1) {chessBoard[i/8][i%8] = "K";}
-            if(((BP>>i) & 1) == 1) {chessBoard[i/8][i%8] = "p";}
-            if(((BN>>i) & 1) == 1) {chessBoard[i/8][i%8] = "n";}
-            if(((BB>>i) & 1) == 1) {chessBoard[i/8][i%8] = "b";}
-            if(((BR>>i) & 1) == 1) {chessBoard[i/8][i%8] = "r";}
-            if(((BQ>>i) & 1) == 1) {chessBoard[i/8][i%8] = "q";}
-            if(((BK>>i) & 1) == 1) {chessBoard[i/8][i%8] = "k";}
+            if(((curBoard.get(BitBoardEnum.WP)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "P";}
+            if(((curBoard.get(BitBoardEnum.WN)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "N";}
+            if(((curBoard.get(BitBoardEnum.WB)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "B";}
+            if(((curBoard.get(BitBoardEnum.WR)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "R";}
+            if(((curBoard.get(BitBoardEnum.WQ)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "Q";}
+            if(((curBoard.get(BitBoardEnum.WK)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "K";}
+            if(((curBoard.get(BitBoardEnum.BP)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "p";}
+            if(((curBoard.get(BitBoardEnum.BN)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "n";}
+            if(((curBoard.get(BitBoardEnum.BB)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "b";}
+            if(((curBoard.get(BitBoardEnum.BR)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "r";}
+            if(((curBoard.get(BitBoardEnum.BQ)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "q";}
+            if(((curBoard.get(BitBoardEnum.BK)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "k";}
         }
 
         for(int i = 0; i < 8; i++){

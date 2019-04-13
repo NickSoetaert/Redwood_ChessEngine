@@ -3,7 +3,7 @@ public class Play{
 
         System.out.println("Hello World!");
 
-        BoardGenerator.initStandardBoard();
+        Board MoveTest = BoardGenerator.initStandardBoard();
 
         long tmp = BoardGenerator.getBoardKey();
         BoardGenerator.drawPiece(tmp);
@@ -13,6 +13,8 @@ public class Play{
         String history = "";
 
         MoveGenerator.generateWhitePawnMoves(b, history);
+
+
 
     }
 }
