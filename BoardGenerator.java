@@ -5,17 +5,7 @@ import java.util.*;
 public class BoardGenerator{
 
     //For debug stuff
-    public static long getBoardKey(){
-        String boardString[][] = {
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "}
-            };
+    public static long getBoardKey(String boardString[][]){
             /*
             {" "," "," "," "," "," "," "," "},
             {" "," ","x"," ","x"," "," "," "},

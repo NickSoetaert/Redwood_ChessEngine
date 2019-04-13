@@ -26,6 +26,47 @@ public class MoveGenerator
     static long hFile = -9187201950435737472L;
 
 
+    // diaginal masks from top right to bottom left
+    static long diaginalMasks[] = {
+        1L,
+        258L,
+        66052L,
+        16909320L,
+        4328785936L,
+        1108169199648L,
+        283691315109952L,
+        72624976668147840L,
+        145249953336295424L,
+        290499906672525312L,
+        580999813328273408L,
+        1161999622361579520L,
+        2323998145211531264L,
+        4647714815446351872L,
+        -9223372036854775808L
+    };
+
+    // FIXME currently not actual data
+    static long antiDiaginalMasks[] = {
+        1L,
+        258L,
+        66052L,
+        16909320L,
+        4328785936L,
+        1108169199648L,
+        283691315109952L,
+        72624976668147840L,
+        145249953336295424L,
+        290499906672525312L,
+        580999813328273408L,
+        1161999622361579520L,
+        2323998145211531264L,
+        4647714815446351872L,
+        -9223372036854775808L
+    };
+
+
+
+
     public static long generateWhitePawnMoves(Board board, String pastMove){
 
 
@@ -52,6 +93,8 @@ public class MoveGenerator
 
         return 0;
     }
+
+    //public static long generateWhiteRookMoves(Board board, String pastMove){
 
 
     public static long generateWhiteKnightMoves(Board board){
