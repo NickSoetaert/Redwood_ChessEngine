@@ -26,6 +26,9 @@ public class MoveGenerator
     static long hFile = -9187201950435737472L;
 
 
+    static long files[] = {hFile,gFile,fFile,eFile,dFile,cFile,bFile,aFile};
+
+
     // diaginal masks from top right to bottom left
     static long diaginalMasks[] = {
         1L,
@@ -70,6 +73,7 @@ public class MoveGenerator
     public static long generateWhitePawnMoves(Board board, String pastMove){
 
 
+        int last_Move_Start = 57, last_Move_End = 39;
         long moves = 0L;
         long WP = board.get(BitBoardEnum.WP);
         long blackPieces = board.GetBlackPieces();
@@ -88,6 +92,17 @@ public class MoveGenerator
         //Forward 2 squares
         moves = moves | (WP >> 16)&empty&(empty >> 8);
 
+        
+        if (Math.abs(last_Move_Start - last_Move_End) == 16)
+        {
+            // En Passant from right
+            moves = moves | (((WP>>1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_End % 8])<<7);
+            
+
+            // "En Passant from left 
+            moves = moves | (((WP<<1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_End % 8])<<8);
+        }
+    
 
         BoardGenerator.drawPiece(moves);
 
