@@ -261,9 +261,18 @@ public class Board
         return null;
     }
 
-    /*private String GenerateUCIPeiceLetter(int startIndex,int endIndex,BitBoardEnum type)
+    //
+    public static int[] UCItoIndex(String UCI)
     {
-       
-    }*/
+        int returnArray[] = new int[2];
+
+        returnArray[0] = Math.abs(((int)'a') - (int)UCI.charAt(0)) + (8 * (UCI.charAt(1) - '0'));
+        returnArray[1] = (((int)UCI.charAt(2) - (int)'a')) + (8 * (UCI.charAt(3)-'0'));
+
+
+        return returnArray;
+    }
+
+
 
 }
