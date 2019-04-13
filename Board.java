@@ -1,6 +1,8 @@
 public class Board
 {   
     private long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
+    private String UCI_LastMove = ""; 
+
 
     // constructor
     public Board(long WP,long WN,long WB,long WR,long WQ,long WK,long BP,long BN,long BB,long BR,long BQ,long BK)
@@ -103,6 +105,7 @@ public class Board
     // moves a peice on local board
     public void move(int startIndex,int finishIndex)
     {
+
         // flipps bits on origin and destination bits
         switch(getPeiceType(startIndex))
         {
@@ -216,6 +219,8 @@ public class Board
                     break;  
             }
         }
+
+        //UCI_LastMove = +(String)((int)"a"+startIndex/8)+ 
     }
     
     // creates a new board that is a copy of current board but with move made
@@ -255,5 +260,19 @@ public class Board
         if(((BK>>i) & 1) == 1) {return BitBoardEnum.BK;}
         return null;
     }
+
+    //
+    public static int[] UCItoIndex(String UCI)
+    {
+        int returnArray[] = new int[2];
+
+        returnArray[0] = Math.abs(((int)'a') - (int)UCI.charAt(0)) + (8 * (UCI.charAt(1) - '0'));
+        returnArray[1] = (((int)UCI.charAt(2) - (int)'a')) + (8 * (UCI.charAt(3)-'0'));
+
+
+        return returnArray;
+    }
+
+
 
 }
