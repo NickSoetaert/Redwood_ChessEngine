@@ -239,7 +239,7 @@ public class Board
     }
 
 
-    public BitBoardEnum getPeiceType(int index)
+    public BitBoardEnum getPeiceType(int i)
     {
         if(((WP>>i) & 1) == 1) {return BitBoardEnum.WP;}
         if(((WN>>i) & 1) == 1) {return BitBoardEnum.WN;}

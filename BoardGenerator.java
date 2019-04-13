@@ -43,43 +43,22 @@ public class BoardGenerator{
         return result;
     }
 
-    public static void initStandardBoard(){
+    public static Board initStandardBoard(){
 
         long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
 
-        /*
         //Black pieces are lowercase, a1 square is bottom left corner.
         String boardString[][] = {
         {"r","n","b","q","k","b","n","r"},
         {"p","p","p","p","p","p","p","p"},
+        {" ","P"," "," "," "," "," "," "},
         {" "," "," "," "," "," "," "," "},
         {" "," "," "," "," "," "," "," "},
-        {" "," "," "," "," "," "," "," "},
-        {" "," "," "," "," "," "," "," "},
+        {"p"," "," ","p"," "," "," "," "},
         {"P","P","P","P","P","P","P","P"},
         {"R","N","B","Q","K","B","N","R"}
         };
-*/
-        String boardString[][] = {
-            {"r","n","b","q","k","b","n","r"},
-            {"p","p","p","p","p","p","p","p"},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," ","p"," "," "," "," "},
-            {" "," "," "," "," ","p"," "," "},
-            {" "," ","p","p"," "," "," ","p"},
-            {"P","P","P","P","P","P","P","P"},
-            {"R","N","B","Q","K","B","N","R"}
-            };
-
-        arrayToBitBoard(boardString,
-                        WP, WN, WB, WR, WQ, WK,
-                        BP, BN, BB, BR, BQ, BK);
-    }
-
-    public static void arrayToBitBoard(String[][] boardString,
-                                       long WP, long WN, long WB, long WR, long WQ, long WK,
-                                       long BP, long BN, long BB, long BR, long BQ, long BK){
-
+        
         String binaryStr;
         //For every square on the chess board
         for(int i = 0; i < 64; i++){
@@ -120,6 +99,7 @@ public class BoardGenerator{
         }
 
         drawBoard(WP, WN, WB, WR, WQ, WK, BP, BN, BB, BR, BQ, BK);
+        return new Board(WP, WN, WB, WR, WQ, WK, BP, BN, BB, BR, BQ, BK);
 
     }
 
