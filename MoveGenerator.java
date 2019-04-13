@@ -33,48 +33,47 @@ public class MoveGenerator
 
     // diaginal masks from top left to bottom right
     static long diaginalMasks[] = {
-        1L,
-        258L,
-        66052L,
-        16909320L,
-        4328785936L,
-        1108169199648L,
-        283691315109952L,
-        72624976668147840L,
-        145249953336295424L,
-        290499906672525312L,
-        580999813328273408L,
-        1161999622361579520L,
-        2323998145211531264L,
-        4647714815446351872L,
-        -9223372036854775808L
+        1L,                     //a8-a8
+        258L,                   //a7-b8
+        66052L,                 //a6-c8
+        16909320L,              //a5-d8
+        4328785936L,            //a4-e8
+        1108169199648L,         //a3-f8
+        283691315109952L,       //a2-g8
+        72624976668147840L,     //a1-h8
+        145249953336295424L,    //b1-h7
+        290499906672525312L,    //c1-h6
+        580999813328273408L,    //d1-h5
+        1161999622361579520L,   //e1-h4
+        2323998145211531264L,   //f1-h3
+        4647714815446351872L,   //g1-h2
+        -9223372036854775808L   //h1-h1
     };
 
     // top right to bottom left
     static long antiDiaginalMasks[] = {
 
-        128L,
-        32832L,
-        8405024L,
-        2151686160L,
-        550831656968L,
-        141012904183812L,
-        36099303471055874L,
-        -9205322385119247871L,
-        4620710844295151872L,
-        2310355422147575808L,
-        1155177711073755136L,
-        577588855528488960L,
-        288794425616760832L,
-        144396663052566528L,
-        72057594037927936L
+        128L,                   //h8-h8
+        32832L,                 //h7-g8
+        8405024L,               //h6-f8
+        2151686160L,            //h5-e8
+        550831656968L,          //h4-d8
+        141012904183812L,       //h3-c8
+        36099303471055874L,     //h2-b8
+        -9205322385119247871L,  //h1-a8
+        4620710844295151872L,   //g1-a7
+        2310355422147575808L,   //f1-a6
+        1155177711073755136L,   //e1-a5
+        577588855528488960L,    //d1-a4
+        288794425616760832L,    //c1-a3
+        144396663052566528L,    //b1-a2
+        72057594037927936L      //a1-a1
     };
 
 
 
 
     public static long generateWhitePawnMoves(Board board, String pastMove){
-
 
         // TODO these should be actually given rather then hardcoded
         int last_Move_Start = 57, last_Move_End = 39;
@@ -121,11 +120,6 @@ public class MoveGenerator
         int rank = 7 - startSquare / 8;
         int file = startSquare % 8;
 
-        System.out.println("~!~!~!~!~");
-
-        System.out.println("Rank: " + rank); //rank is horizontal
-        System.out.println("File: " + file); //file is vertical
-
         long verticalMoves = (occupied - (2 * binaryStartSquare)) ^ 
                               Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare));
         verticalMoves = verticalMoves&files[file];
@@ -135,11 +129,18 @@ public class MoveGenerator
        
         horizontalMoves = horizontalMoves & ranks[rank];
 
-        BoardGenerator.drawPiece(horizontalMoves ^ verticalMoves);
+        //BoardGenerator.drawPiece(horizontalMoves ^ verticalMoves);
+
+        return(horizontalMoves ^ verticalMoves);
+
+    }
+
+    public static long generateDiagonalMoves(Board board, int startSquare){
 
 
         return 0;
     }
+
 
     public static long generateWhiteKnightMoves(Board board){
 
