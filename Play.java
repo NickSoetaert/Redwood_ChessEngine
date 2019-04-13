@@ -181,11 +181,16 @@ public class Play{
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
+            {" "," "," "," "," ","P","p"," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
+<<<<<<< HEAD
             {" "," "," "," "," "," "," "," "},
             {"x"," "," "," "," "," "," "," "}
+=======
+            {" "," "," "," "," "," "," "," "}
+>>>>>>> b45386544a5f50928abbf883886610c53141820d
             };
 
         BoardGenerator.getBoardKey(b17oardString);
@@ -197,7 +202,7 @@ public class Play{
 
         String history = "";
 
-        MoveGenerator.generateWhitePawnMoves(b, history);
+        MoveGenerator.generateWhitePawnMoves(MoveTest, history);
 
     }
 }
