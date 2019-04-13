@@ -4,6 +4,35 @@ import java.util.*;
 
 public class BoardGenerator{
 
+    //For debug stuff
+    public static long getBoardKey(){
+        String boardString[][] = {
+            {"x"," "," "," "," "," "," "," "},
+            {" "," "," "," ","x"," "," "," "},
+            {" "," "," "," "," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
+            {"x","x"," "," "," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
+            {"x"," "," "," "," "," ","x"," "}
+            };
+
+        long result = 0;
+        String binaryStr;
+        for(int i = 0; i < 64; i++){
+            binaryStr = "0000000000000000000000000000000000000000000000000000000000000000";
+            binaryStr = binaryStr.substring(i+1) + "1" + binaryStr.substring(0,i);
+
+            switch(boardString[i/8][i%8]){
+                case "x": result += stringToBinary(binaryStr);
+                break;
+            }
+        }
+        
+        System.out.println(result);
+        return result;
+    }
+
     public static void initStandardBoard(){
 
         EnumMap< BitBoardEnum,Long> board = new EnumMap< BitBoardEnum,Long>(BitBoardEnum.class);
@@ -22,7 +51,6 @@ public class BoardGenerator{
         {"R","N","B","Q","K","B","N","R"}
         };
 
-        System.out.println(board.get(BitBoardEnum.WP));
         arrayToBitBoard(boardString,
                         WP, WN, WB, WR, WQ, WK,
                         BP, BN, BB, BR, BQ, BK);
@@ -126,5 +154,27 @@ public class BoardGenerator{
        }
   
     }
+
+   public static void drawPiece(long bb){
+        String chessBoard[][] = new String[8][8];
+            
+        for(int i = 0; i < 64; i++){
+            chessBoard[i/8][i%8] = " ";
+        }
+
+        for(int i = 0; i < 64; i++){
+            /*
+            * Shift bits i bits to the right
+            * After shift, if leading bit is a 1, there is a piece on the current square
+            */
+            if(((bb>>i) & 1) == 1) {chessBoard[i/8][i%8] = "x";}
+        } 
+
+        for(int i = 0; i < 8; i++){
+            System.out.println(8-i + " " + Arrays.toString(chessBoard[i]));
+        }
+        System.out.println("   A  B  C  D  E  F  G  H\n");
+    }
+
 
 }

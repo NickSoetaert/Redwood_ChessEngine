@@ -5,5 +5,8 @@ public class Play{
 
         BoardGenerator.initStandardBoard();
 
+        long tmp = BoardGenerator.getBoardKey();
+        BoardGenerator.drawPiece(tmp);
+
     }
 }
