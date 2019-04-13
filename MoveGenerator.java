@@ -13,6 +13,9 @@ public class MoveGenerator
     static long secondRank  = 71776119061217280L;
     static long firstRank   = -72057594037927936L;
 
+    static long whiteSide = firstRank | secondRank | thirdRank | fourthRank;
+    static long blackSide = fifthRank | sixthRank | seventhRank | eighthRank;
+
     static long aFile = 72340172838076673L;
     static long bFile = 144680345676153346L;
     static long cFile = 289360691352306692L;
@@ -23,24 +26,26 @@ public class MoveGenerator
     static long hFile = -9187201950435737472L;
 
 
-
-
-
-
     public static long generateWhitePawnMoves(Board board, String pastMove){
 
 
         long moves = 0L;
         long WP = board.get(BitBoardEnum.WP);
         long blackPieces = board.GetBlackPieces();
-        System.out.println("~~~~~~~~~~~~~~~~~~~~" + WP);
+        long whitePieces = board.GetWhitePieces();
+        long empty = ~(blackPieces | whitePieces);
 
-        //d6 = 524288
         //Capture left
         moves = (WP >> 9)&~eighthRank&~hFile&blackPieces;
 
         //Capture right
         moves = moves | (WP >> 7)&~eighthRank&~aFile&blackPieces;
+
+        //Forward 1 square
+        moves = moves | (WP >> 8)&~eighthRank&empty;
+
+        //Forward 2 squares
+        moves = moves | (WP >> 16)&empty&(empty >> 8);
 
 
         BoardGenerator.drawPiece(moves);
