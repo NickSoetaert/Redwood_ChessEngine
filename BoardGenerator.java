@@ -7,14 +7,14 @@ public class BoardGenerator{
     //For debug stuff
     public static long getBoardKey(){
         String boardString[][] = {
-            {"x"," "," "," "," "," "," "," "},
-            {" "," "," "," ","x"," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
-            {"x","x"," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
-            {"x"," "," "," "," "," ","x"," "}
+            {" "," "," "," "," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
+            {" "," "," "," "," "," "," "," "}
             };
 
         long result = 0;
@@ -34,8 +34,6 @@ public class BoardGenerator{
     }
 
     public static void initStandardBoard(){
-
-        EnumMap< BitBoardEnum,Long> board = new EnumMap< BitBoardEnum,Long>(BitBoardEnum.class);
 
         long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
 
