@@ -1,6 +1,5 @@
 public class MoveGenerator
 {
-
     //A, B file: 217020518514230019L
     //G, H file: -4557430888798830400L
 
@@ -26,7 +25,7 @@ public class MoveGenerator
     static long hFile = -9187201950435737472L;
 
 
-    // diaginal masks from top right to bottom left
+    // diaginal masks from top left to bottom right
     static long diaginalMasks[] = {
         1L,
         258L,
@@ -45,23 +44,24 @@ public class MoveGenerator
         -9223372036854775808L
     };
 
-    // FIXME currently not actual data
+    // top right to bottom left
     static long antiDiaginalMasks[] = {
-        1L,
-        258L,
-        66052L,
-        16909320L,
-        4328785936L,
-        1108169199648L,
-        283691315109952L,
-        72624976668147840L,
-        145249953336295424L,
-        290499906672525312L,
-        580999813328273408L,
-        1161999622361579520L,
-        2323998145211531264L,
-        4647714815446351872L,
-        -9223372036854775808L
+
+        128L,
+        32832L,
+        8405024L,
+        2151686160L,
+        550831656968L,
+        141012904183812L,
+        36099303471055874L,
+        -9205322385119247871L,
+        4620710844295151872L,
+        2310355422147575808L,
+        1155177711073755136L,
+        577588855528488960L,
+        288794425616760832L,
+        144396663052566528L,
+        72057594037927936L
     };
 
 
@@ -88,14 +88,21 @@ public class MoveGenerator
         //Forward 2 squares
         moves = moves | (WP >> 16)&empty&(empty >> 8);
 
-
         BoardGenerator.drawPiece(moves);
 
         return 0;
     }
 
-    //public static long generateWhiteRookMoves(Board board, String pastMove){
+    public static long generateWhiteRookMoves(Board board, int startSquare){
 
+        long binaryStartSquare = 1L << startSquare;
+        int rank = 8 - startSquare / 8;
+        int file = startSquare % 8;
+
+         
+
+        return 0;
+    }
 
     public static long generateWhiteKnightMoves(Board board){
 
