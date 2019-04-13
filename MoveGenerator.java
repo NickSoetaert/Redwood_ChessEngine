@@ -3,36 +3,37 @@ public class MoveGenerator
     //A, B file: 217020518514230019L
     //G, H file: -4557430888798830400L
 
-    static long eighthRank  = 255L;
-    static long seventhRank = 65280L;
-    static long sixthRank   = 16711680L;
-    static long fifthRank   = 4278190080L;
-    static long fourthRank  = 1095216660480L;
-    static long thirdRank   = 280375465082880L;
-    static long secondRank  = 71776119061217280L;
-    static long firstRank   = -72057594037927936L;
+    //1st to 8th rank
+    static long ranks[] = {
+        -72057594037927936L,
+        71776119061217280L,
+        280375465082880L,
+        1095216660480L,
+        4278190080L,
+        16711680L,
+        65280L,
+        255L
 
-    static long whiteSide = firstRank | secondRank | thirdRank | fourthRank;
-    static long blackSide = fifthRank | sixthRank | seventhRank | eighthRank;
-
-    static long aFile = 72340172838076673L;
-    static long bFile = 144680345676153346L;
-    static long cFile = 289360691352306692L;
-    static long dFile = 578721382704613384L;
-    static long eFile = 1157442765409226768L;
-    static long fFile = 2314885530818453536L;
-    static long gFile = 4629771061636907072L;
-    static long hFile = -9187201950435737472L;
+        
+    };
 
 
-<<<<<<< HEAD
+    static long files[] = {
+        
+        -9187201950435737472L,
+        4629771061636907072L,
+        2314885530818453536L,
+        1157442765409226768L,
+        578721382704613384L,
+        289360691352306692L,
+        144680345676153346L,
+        72340172838076673L
+        
+    };
+
+
+
     // diaginal masks from top left to bottom right
-=======
-    static long files[] = {hFile,gFile,fFile,eFile,dFile,cFile,bFile,aFile};
-
-
-    // diaginal masks from top right to bottom left
->>>>>>> b45386544a5f50928abbf883886610c53141820d
     static long diaginalMasks[] = {
         1L,
         258L,
@@ -85,32 +86,17 @@ public class MoveGenerator
         long empty = ~(blackPieces | whitePieces);
 
         //Capture left
-        moves = (WP >> 9)&~eighthRank&~hFile&blackPieces;
+        moves = (WP >> 9)&~ranks[7]&~files[7]&blackPieces;
 
         //Capture right
-        moves = moves | (WP >> 7)&~eighthRank&~aFile&blackPieces;
+        moves = moves | (WP >> 7)&~ranks[7]&~files[0]&blackPieces;
 
         //Forward 1 square
-        moves = moves | (WP >> 8)&~eighthRank&empty;
+        moves = moves | (WP >> 8)&~ranks[7]&empty;
 
         //Forward 2 squares
         moves = moves | (WP >> 16)&empty&(empty >> 8);
 
-<<<<<<< HEAD
-=======
-        
-        if (Math.abs(last_Move_Start - last_Move_End) == 16)
-        {
-            // En Passant from right
-            moves = moves | (((WP>>1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_End % 8])<<7);
-            
-
-            // "En Passant from left 
-            moves = moves | (((WP<<1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_End % 8])<<8);
-        }
-    
-
->>>>>>> b45386544a5f50928abbf883886610c53141820d
         BoardGenerator.drawPiece(moves);
 
         return 0;
@@ -118,11 +104,32 @@ public class MoveGenerator
 
     public static long generateWhiteRookMoves(Board board, int startSquare){
 
+        long occupied = board.GetBlackPieces() | board.GetWhitePieces();
+
         long binaryStartSquare = 1L << startSquare;
-        int rank = 8 - startSquare / 8;
+        int rank = startSquare / 8;
         int file = startSquare % 8;
 
-         
+        //g5
+        System.out.println("~!~!~!~!~");
+
+        System.out.println("Rank: " + rank); //rank is horizontal
+        System.out.println("File: " + file); //file is vertical
+
+        BoardGenerator.drawPiece(ranks[rank]);
+        BoardGenerator.drawPiece(files[file]);
+
+        long verticalMoves = (occupied - (2 * binaryStartSquare)) ^ 
+                              Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare));
+        verticalMoves = verticalMoves&files[file];
+
+
+        long horizontalMoves = ((occupied & ranks[rank]) - (2 * binaryStartSquare)) ^ 
+                                Long.reverse(Long.reverse(occupied&ranks[rank]) - (2 * Long.reverse(startSquare)));
+        
+        horizontalMoves = horizontalMoves&ranks[rank];
+
+        BoardGenerator.drawPiece(horizontalMoves ^ verticalMoves);
 
         return 0;
     }
