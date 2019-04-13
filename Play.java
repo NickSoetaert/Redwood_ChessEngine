@@ -8,5 +8,9 @@ public class Play{
         long tmp = BoardGenerator.getBoardKey();
         BoardGenerator.drawPiece(tmp);
 
+        Board b = new Board();
+
+        MoveGenerator.generateKnightMoves(b);
+
     }
 }
