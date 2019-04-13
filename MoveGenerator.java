@@ -114,38 +114,7 @@ public class MoveGenerator
 
         BoardGenerator.drawPiece(i);
 
-        /*
-        long possibility;
-        while(i != 0)
-        {
-            int iLocation=Long.numberOfTrailingZeros(i);
-            if (iLocation>18)
-            {
-                possibility=KNIGHT_SPAN<<(iLocation-18);
-            }
-            else {
-                possibility=KNIGHT_SPAN>>(18-iLocation);
-            }
-            if (iLocation%8<4)
-            {
-                possibility &=~FILE_GH&NOT_MY_PIECES;
-            }
-            else {
-                possibility &=~FILE_AB&NOT_MY_PIECES;
-            }
-            long j=possibility&~(possibility-1);
-            while (j != 0)
-            {
-                int index=Long.numberOfTrailingZeros(j);
-                list+=""+(iLocation/8)+(iLocation%8)+(index/8)+(index%8);
-                possibility&=~j;
-                j=possibility&~(possibility-1);
-            }
-            N&=~i;
-            i=N&~(N-1);
-        }
-        return list; 
-        */
+      
         return "";
     }
 
