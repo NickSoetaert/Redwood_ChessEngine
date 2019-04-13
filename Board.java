@@ -273,6 +273,27 @@ public class Board
         return returnArray;
     }
 
+    public static String IndexToUCI(int firstIndex,int LastIndex)
+    {
+        String UCIout = "";
+        UCIout = UCIout.concat(String.valueOf((char)( (int)'a' + getFile(firstIndex))));
+        UCIout = UCIout.concat(String.valueOf((getRank(firstIndex))));
+        UCIout = UCIout.concat(String.valueOf((char)( (int)'a' + getFile(LastIndex))));
+        UCIout = UCIout.concat(String.valueOf((getRank(LastIndex))));
+
+        return UCIout;
+    }
+
+    public static int getRank(int Index)
+    {
+        return 8 - (Index / 8);
+    }
+    public static int getFile(int Index)
+    {
+        return Index % 8;
+    }
+
+
 
 
 }
