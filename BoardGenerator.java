@@ -23,7 +23,9 @@ public class BoardGenerator{
         };
 
         System.out.println(board.get(BitBoardEnum.WP));
-        //arrayToBitBoard(board, boardString);
+        arrayToBitBoard(boardString,
+                        WP, WN, WB, WR, WQ, WK,
+                        BP, BN, BB, BR, BQ, BK);
     }
 
     public static void arrayToBitBoard(String[][] boardString,
