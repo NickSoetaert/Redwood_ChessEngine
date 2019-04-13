@@ -72,6 +72,52 @@ public class MoveGenerator
 
 
 
+    public static String possibleWhiteMoves(Board board, String pastMove){
+        long BP = board.get(BitBoardEnum.BP);
+        long BN = board.get(BitBoardEnum.BN);
+        long BB = board.get(BitBoardEnum.BB);
+        long BR = board.get(BitBoardEnum.BR);
+        long BQ = board.get(BitBoardEnum.BQ);
+
+        long capturablePieces = BP | BN | BB | BR | BQ; //Can't capture black king
+
+        possibleKnightMoves(board, capturablePieces, BN);
+
+        return "";
+    }
+
+    public static String possibleBlackMoves(Board board, String pastMove){
+
+        long WP = board.get(BitBoardEnum.WP);
+        long WN = board.get(BitBoardEnum.WN);
+        long WB = board.get(BitBoardEnum.WB);
+        long WR = board.get(BitBoardEnum.WR);
+        long WQ = board.get(BitBoardEnum.WQ);
+
+
+        long capturablePieces = WP | WN | WB | WR | WQ; //Can't capture white king
+
+        return "";
+    }
+
+    public static String possibleKnightMoves(Board b, long capturablePieces, long N){
+
+        String list="";
+
+        long i = N;
+
+        BoardGenerator.drawPiece(i);
+
+        BoardGenerator.drawPiece(~(N-1));
+        BoardGenerator.drawPiece(N);
+        i=N&~(N-1);
+
+        BoardGenerator.drawPiece(i);
+
+      
+        return "";
+    }
+
 
     public static long generateWhitePawnMoves(Board board, String pastMove){
 
@@ -114,33 +160,21 @@ public class MoveGenerator
     public static long generateVerticalHorizontalMoves(Board board, int startSquare){
 
         long occupied = board.GetBlackPieces() | board.GetWhitePieces();
-
         long binaryStartSquare = 1L << startSquare;
 
         int rank = 7 - startSquare / 8;
         int file = startSquare % 8;
 
-
         long horizontalMoves = ((occupied - 2 * binaryStartSquare) ^
                               Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare)));
         horizontalMoves = horizontalMoves & ranks[rank];
         
-        //long verticalMoves = (occupied - (2 * binaryStartSquare)) ^ 
-            //                  Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare));
-        //verticalMoves = verticalMoves&files[file];
-
         long verticalMoves = ((occupied & files[file]) - (2 *binaryStartSquare)) ^
                                Long.reverse(Long.reverse(occupied&files[file]) - (2 * Long.reverse(binaryStartSquare)));
         verticalMoves = verticalMoves & files[file];
 
-        //long possibilitiesVertical = ((OCCUPIED&FileMasks8[s % 8]) - (2 * binaryS)) ^ Long.reverse(Long.reverse(OCCUPIED&FileMasks8[s % 8]) - (2 * Long.reverse(binaryS)));
-
-
-
-        BoardGenerator.drawPiece(verticalMoves ^ horizontalMoves);
-
+        //BoardGenerator.drawPiece(verticalMoves ^ horizontalMoves);
         return(horizontalMoves ^ verticalMoves);
-
     }
 
     public static long generateDiagonalMoves(Board board, int startSquare){
@@ -151,17 +185,19 @@ public class MoveGenerator
 
         long binaryStartSquare = 1L << startSquare;
 
-        long diagonalMoves = ((occupied&diaginalMasks[rank + file]) - (2 * binaryStartSquare)) ^
+        long diagonalMoves = ((occupied & diaginalMasks[rank + file]) - (2 * binaryStartSquare)) ^
                                 Long.reverse(Long.reverse(occupied&diaginalMasks[rank + file]) - (2 * Long.reverse(binaryStartSquare)));
         diagonalMoves = diagonalMoves & diaginalMasks[rank + file];
 
-        BoardGenerator.drawPiece(diagonalMoves);
+        long antiDiagonalMoves = ((occupied & antiDiaginalMasks[rank + 7 - file]) - (2 * binaryStartSquare)) ^ 
+                                Long.reverse(Long.reverse(occupied&antiDiaginalMasks[rank + 7 - file]) - (2 * Long.reverse(binaryStartSquare)));
+        antiDiagonalMoves = antiDiagonalMoves & antiDiaginalMasks[rank + 7 - file];
+        
+        BoardGenerator.drawPiece(diagonalMoves ^ antiDiagonalMoves);
 
-
-        long antiDiagonalMoves;
-
-        return 0;
+        return(diagonalMoves ^ antiDiagonalMoves);
     }
+
 
 
     public static long generateWhiteKnightMoves(Board board){
@@ -174,9 +210,6 @@ public class MoveGenerator
         
         BoardGenerator.drawPiece(dest);
 
-
-
         return dest;
-    
     }
 }
