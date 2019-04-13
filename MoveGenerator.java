@@ -73,6 +73,7 @@ public class MoveGenerator
     public static long generateWhitePawnMoves(Board board, String pastMove){
 
 
+        // TODO these should be actually given rather then hardcoded
         int last_Move_Start = 57, last_Move_End = 39;
         long moves = 0L;
         long WP = board.get(BitBoardEnum.WP);
@@ -93,14 +94,13 @@ public class MoveGenerator
         moves = moves | (WP >> 16)&empty&(empty >> 8);
 
         
-        if (Math.abs(last_Move_Start - last_Move_End) == 16)
+        if (Math.abs(last_Move_Start - last_Move_End) == 18)
         {
             // En Passant from right
-            moves = moves | (((WP>>1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_End % 8])<<7);
+            moves = moves | (((WP>>1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_Start%8])>>8);
             
-
             // "En Passant from left 
-            moves = moves | (((WP<<1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_End % 8])<<8);
+            moves = moves | (((WP<<1)&board.get(BitBoardEnum.BP)&fifthRank&files[last_Move_Start%8])>>8);
         }
     
 
