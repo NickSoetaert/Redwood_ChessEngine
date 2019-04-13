@@ -7,7 +7,7 @@ public class Play{
 
 
 
-        MoveGenerator.generateWhiteRookMoves(board, 57);
+        MoveGenerator.generateWhiteRookMoves(board, 40);
 
 
     }

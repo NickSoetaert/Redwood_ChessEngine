@@ -19,16 +19,14 @@ public class MoveGenerator
 
 
     static long files[] = {
-        
-        -9187201950435737472L,
-        4629771061636907072L,
-        2314885530818453536L,
-        1157442765409226768L,
-        578721382704613384L,
-        289360691352306692L,
+        72340172838076673L,
         144680345676153346L,
-        72340172838076673L
-        
+        289360691352306692L,
+        578721382704613384L,
+        1157442765409226768L,
+        2314885530818453536L,
+        4629771061636907072L,
+        -9187201950435737472L
     };
 
 
@@ -107,6 +105,7 @@ public class MoveGenerator
         long occupied = board.GetBlackPieces() | board.GetWhitePieces();
 
         long binaryStartSquare = 1L << startSquare;
+        BoardGenerator.drawPiece(startSquare);
         int rank = startSquare / 8;
         int file = startSquare % 8;
 
@@ -116,8 +115,8 @@ public class MoveGenerator
         System.out.println("Rank: " + rank); //rank is horizontal
         System.out.println("File: " + file); //file is vertical
 
-        BoardGenerator.drawPiece(ranks[rank]);
-        BoardGenerator.drawPiece(files[file]);
+        //BoardGenerator.drawPiece(ranks[rank]);
+        //BoardGenerator.drawPiece(files[file]);
 
         long verticalMoves = (occupied - (2 * binaryStartSquare)) ^ 
                               Long.reverse(Long.reverse(occupied) - 2 * Long.reverse(binaryStartSquare));
@@ -129,7 +128,9 @@ public class MoveGenerator
         
         horizontalMoves = horizontalMoves&ranks[rank];
 
-        BoardGenerator.drawPiece(horizontalMoves ^ verticalMoves);
+        BoardGenerator.drawPiece(ranks[0]);
+
+        BoardGenerator.drawPiece(horizontalMoves);// ^ verticalMoves);
 
         return 0;
     }
