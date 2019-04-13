@@ -17,7 +17,7 @@ public class MoveGenerator
         
     };
 
-
+    //a to h file
     static long files[] = {
         72340172838076673L,
         144680345676153346L,
@@ -96,7 +96,6 @@ public class MoveGenerator
         //Forward 2 squares
         moves = moves | (WP >> 16)&empty&(empty >> 8);
 
-<<<<<<< HEAD
         
         if (Math.abs(last_Move_Start - last_Move_End) == 18)
         {
@@ -108,8 +107,6 @@ public class MoveGenerator
         }
     
 
-=======
->>>>>>> 67af9a7557cd9cd8faf9115abcbf10fa38d9b29e
         BoardGenerator.drawPiece(moves);
 
         return 0;
