@@ -109,7 +109,8 @@ public class Board
     // creates a new board that is a copy of current board but with move made
     public Board newBoardMove(long rowStart,long colStart, long rowEnd, long colEnd)
     {
-        Board newBoard = new Board();
+        Board newBoard = new Board(0,0,0,0,0,0,0,0,0,0,0,0);
+        return newBoard;
     }
 
 

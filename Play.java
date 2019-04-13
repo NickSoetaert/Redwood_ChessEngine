@@ -8,9 +8,11 @@ public class Play{
         long tmp = BoardGenerator.getBoardKey();
         BoardGenerator.drawPiece(tmp);
 
-        Board b = new Board();
+        Board b = new Board(4563419136L,0,0,0,0,0,0,524288,0,0,0,0);
 
-        MoveGenerator.generateKnightMoves(b);
+        String history = "";
+
+        MoveGenerator.generateWhitePawnMoves(b, history);
 
     }
 }
