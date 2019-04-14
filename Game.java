@@ -75,6 +75,7 @@ public class Game
         int i = 0;
         while(i < 1000000)
         {
+
             if (AIturn == curTurn)
             {
                 advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves),"White");

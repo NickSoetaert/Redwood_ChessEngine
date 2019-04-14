@@ -23,7 +23,6 @@ public class AI
 
     public int minmaxBlack(Board board, int depth, int maxDepth, ArrayList<String> history)
     {
-
         //System.out.println("Depth at : "+ depth + " of max " + maxDepth);
         //System.out.println(depth >= maxDepth);
         if (depth >= maxDepth)
@@ -31,8 +30,6 @@ public class AI
             //System.out.println("Returning!@!@!@!@!");
             return board.eval();
         }
-
-        
 
         if (depth % 2 != 0)
         {
@@ -63,7 +60,6 @@ public class AI
             return best;
         }
     }
-
 
     public int minmaxWhite(Board board, int depth, int maxDepth, ArrayList<String> history)
     {
