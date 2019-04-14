@@ -310,9 +310,32 @@ public class Board
     // A positive score favors white, negative favors black
     public int eval()
     {
-        return 0;
+        System.out.println("Eval " + this.getMaterialImbalance());
+        return this.getMaterialImbalance();
     }
 
-    
+    private int getMaterialImbalance(){
+        int imbalance = 0;
+
+        for(int i = 0; i < 64; i++){
+            /*
+             * Shift bits i bits to the right
+             * After shift, if leading bit is a 1, there is a piece on the current square
+             */
+            if(((this.get(BitBoardEnum.WP)>>i) & 1) == 1) {imbalance += 1;}
+            if(((this.get(BitBoardEnum.WN)>>i) & 1) == 1) {imbalance += 3;}
+            if(((this.get(BitBoardEnum.WB)>>i) & 1) == 1) {imbalance += 3;}
+            if(((this.get(BitBoardEnum.WR)>>i) & 1) == 1) {imbalance += 5;}
+            if(((this.get(BitBoardEnum.WQ)>>i) & 1) == 1) {imbalance += 9;}
+            if(((this.get(BitBoardEnum.WK)>>i) & 1) == 1) {imbalance += 100;}
+            if(((this.get(BitBoardEnum.BP)>>i) & 1) == 1) {imbalance -= 1;}
+            if(((this.get(BitBoardEnum.BN)>>i) & 1) == 1) {imbalance -= 3;}
+            if(((this.get(BitBoardEnum.BB)>>i) & 1) == 1) {imbalance -= 3;}
+            if(((this.get(BitBoardEnum.BR)>>i) & 1) == 1) {imbalance -= 5;}
+            if(((this.get(BitBoardEnum.BQ)>>i) & 1) == 1) {imbalance -= 9;}
+            if(((this.get(BitBoardEnum.BK)>>i) & 1) == 1) {imbalance -= 100;}
+        }
+        return imbalance;
+    }
 
 }
