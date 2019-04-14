@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class Game
 {
     public AI OurGuy;
-    public enum Turn {BLACK, WHITE}
 
 
     //~!~!~!~!~!~!~!~!~!~!~!~
