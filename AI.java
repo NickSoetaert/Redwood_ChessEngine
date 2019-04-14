@@ -12,16 +12,16 @@ public class AI
         this.currentGame = currentGame;
     }
 
-    public String Think(ArrayList<String> moves,String Color)
+    public String Think(ArrayList<String> moves,String Color,int depth)
     {
-        return FindBestMove(currentGame, 11,new ArrayList<String>(),Color);
+        return FindBestMove(currentGame, depth,new ArrayList<String>(),Color);
     }
     public void act(String action)
     {
         currentGame.move(action);
     }
 
-    public int minmaxBlack(Board board, int depth, int maxDepth, ArrayList<String> history)
+    public int minmaxBlack(Board board, int depth, int maxDepth, ArrayList<String> history,Boolean ismax)
     {
         //System.out.println("Depth at : "+ depth + " of max " + maxDepth);
         //System.out.println(depth >= maxDepth);
@@ -31,9 +31,9 @@ public class AI
             return board.eval();
         }
 
-        if (depth % 2 != 0)
+        if (ismax)
         {
-            int best = 1000;
+            int best = -1000;
             ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history);
 
             for (int i = 0; i < childMoves.size(); ++i)
@@ -41,13 +41,13 @@ public class AI
                 // In an ideal world we would make an undo fucntion that can undo a move 
 
                 depth += 1;
-                best = Math.min(best, minmaxBlack(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history));
+                best = Math.max(best, minmaxBlack(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history,ismax));
             }
             return best;
         }
         else
         {
-            int best = -1000;
+            int best = 1000;
             ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history);
 
             for (int i = 0; i < childMoves.size(); ++i)
@@ -55,13 +55,13 @@ public class AI
                 // In an ideal world we would make an undo fucntion that can undo a move 
 
                 depth += 1;
-                best = Math.max(best, minmaxBlack(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history));
+                best = Math.min(best, minmaxBlack(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history,ismax));
             }
             return best;
         }
     }
 
-    public int minmaxWhite(Board board, int depth, int maxDepth, ArrayList<String> history)
+    public int minmaxWhite(Board board, int depth, int maxDepth, ArrayList<String> history, boolean ismax)
     {
 
         //System.out.println("Depth at : "+ depth + " of max " + maxDepth);
@@ -74,7 +74,7 @@ public class AI
 
         
 
-        if (depth % 2 == 0)
+        if (ismax)
         {
             int best = -1000;
             ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history);
@@ -82,9 +82,8 @@ public class AI
             for (int i = 0; i < childMoves.size(); ++i)
             {
                 // In an ideal world we would make an undo fucntion that can undo a move 
-
-                depth += 1;
-                best = Math.max(best, minmaxWhite(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history));
+                //depth += 1;
+                best = Math.max(best, minmaxWhite(board.newBoardMove(childMoves.get(i)), depth+1, maxDepth, history,!ismax));
             }
             return best;
         }
@@ -97,8 +96,8 @@ public class AI
             {
                 // In an ideal world we would make an undo fucntion that can undo a move 
 
-                depth += 1;
-                best = Math.min(best, minmaxWhite(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history));
+                //depth += 1;
+                best = Math.min(best, minmaxWhite(board.newBoardMove(childMoves.get(i)), depth+1, maxDepth, history,!ismax));
             }
             return best;
         }
@@ -128,7 +127,7 @@ public class AI
 
             if (color == "White")
             {
-                temp_score = minmaxWhite(board.newBoardMove(childMoves.get(i)), 0, depthMax, history);
+                temp_score = minmaxWhite(board.newBoardMove(childMoves.get(i)), 0, depthMax, history,true);
                 //System.out.println(childMoves.get(i) + " has a final score of : " + temp_score);
                 if (temp_score > BestScore)
                 {
@@ -138,13 +137,15 @@ public class AI
             }
             else
             {
-                temp_score = minmaxBlack(board.newBoardMove(childMoves.get(i)), 0, depthMax, history);
+                temp_score = minmaxBlack(board.newBoardMove(childMoves.get(i)), 0, depthMax, history,false);
                 if (temp_score < BestScore)
                 {
                     BestScore = temp_score;
                     best_move = childMoves.get(i);
                 }
             }
+            System.out.println("most choice " + i + " of  " + childMoves.size() + "current best evaluated to be : " + BestScore);
+
         }
 
         //BoardGenerator.drawBoard(currentGame);

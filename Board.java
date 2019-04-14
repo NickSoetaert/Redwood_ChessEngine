@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public class Board
 {   
     private long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
-
+    private ArrayList<BitBoardEnum> takenHistory;
+    public ArrayList<String> pastMoves = new ArrayList<>();
 
     // constructor
     public Board(long WP,long WN,long WB,long WR,long WQ,long WK,long BP,long BN,long BB,long BR,long BQ,long BK)
@@ -106,18 +109,33 @@ public class Board
         this.move(movevals[0], movevals[1]);
     }
 
+    public void undoLastMove()
+    {
+        //move()
+    }
+
     // moves a peice on local board
     public void move(int startIndex,int finishIndex)
     {
         BitBoardEnum taken = getPeiceType(finishIndex);
         BitBoardEnum moved = getPeiceType(startIndex);
-        
+        pastMoves.add(IndexToUCI(startIndex, finishIndex));
+        takenHistory.add(taken);
         // flipps bits on origin and destination bits
         switch(moved)
         {
             case WP:
-                WP = WP ^ (1L <<(startIndex));
-                WP = WP ^ (1L <<(finishIndex));
+
+                if (((getRank(finishIndex))) == 7)
+                {
+                    WP = WP ^ (1L <<(startIndex));
+                    WQ = WQ ^ (1L <<(finishIndex));
+                }
+                else
+                {
+                    WP = WP ^ (1L <<(startIndex));
+                    WP = WP ^ (1L <<(finishIndex)); 
+                }
                 break;
             case WN:
                 WN = WN ^ (1L<<(startIndex));
@@ -140,8 +158,16 @@ public class Board
                 WK = WK ^ (1L<<(finishIndex));                
                 break;
             case BP:
-                BP = BP ^ (1L<<(startIndex));
-                BP = BP ^ (1L<<(finishIndex));                
+                if ((getRank(finishIndex)) == 0)
+                {
+                    BP = BP ^ (1L <<(startIndex));
+                    BQ = BQ ^ (1L <<(finishIndex));
+                }
+                else
+                {
+                    BP = BP ^ (1L <<(startIndex));
+                    BP = BP ^ (1L <<(finishIndex)); 
+                }
                 break;
             case BN:
                 BN = BN ^ (1L<<(startIndex));
@@ -268,7 +294,7 @@ public class Board
         if(((BR>>(i)) & 1) == 1) {return BitBoardEnum.BR;}
         if(((BQ>>(i)) & 1) == 1) {return BitBoardEnum.BQ;}
         if(((BK>>(i)) & 1) == 1) {return BitBoardEnum.BK;}
-        return null;
+        return BitBoardEnum.NONE;
     }
 
     public static int[] UCItoIndex(String UCI)

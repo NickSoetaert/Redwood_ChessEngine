@@ -34,10 +34,11 @@ public class Game
             }
             if (AIturn == curTurn)
             {
+                System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves));
                 BoardGenerator.drawBoard(board);
                 System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves));
                 System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves).size());
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves), "White");
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves), "White",11);
                 OurGuy.act(advisedAction);
                 pastMoves.add(advisedAction);
                 curTurn = userTurn;
@@ -45,7 +46,8 @@ public class Game
             else
             {
                 BoardGenerator.drawBoard(board);
-                System.out.println("AI action : ".concat(advisedAction));
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("WHITE AI action : ".concat(advisedAction));
                 curTurn = AIturn;
                 System.out.println(curTurn.toString() + " user's turn, please type a move : ");
                 UCIinput = scanner.nextLine();
@@ -78,7 +80,7 @@ public class Game
 
             if (AIturn == curTurn)
             {
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves),"White");
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves),"White",4);
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
@@ -98,7 +100,7 @@ public class Game
             }
             else
             {
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves),"Black");
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves),"Black",4);
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
