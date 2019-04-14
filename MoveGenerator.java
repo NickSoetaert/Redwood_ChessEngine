@@ -158,7 +158,6 @@ public class MoveGenerator
             legalMoves.add(s);
         }
 
-        System.out.println("Legal black moves: " + legalMoves);
         return legalMoves;
     }
 
