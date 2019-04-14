@@ -1,0 +1,2 @@
+enum Color
+{BLACK, WHITE}
