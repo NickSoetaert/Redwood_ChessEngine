@@ -38,7 +38,8 @@ public class BoardGenerator{
         long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
 
         //Black pieces are lowercase, a1 square is bottom left corner.
-        String boardString[][] = {
+        String boardString[][] =
+        /* {
             {"r","n","b","q","k","b","n","r"},
             {"p","p","p","p","p","p","p","p"},
             {" "," "," "," "," "," "," "," "},
@@ -48,18 +49,18 @@ public class BoardGenerator{
             {"P","P","P","P","P","P","P","P"},
             {"R","N","B","Q","K","B","N","R"}
         };
-        
-        /*{
+        */
+        {
+            {" "," "," "," "," "," "," "," "},
+            {" "," "," "," ","p"," ","p"," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
-            {" "," "," "," "," "," "," "," "},
+            {" ","P"," ","P"," "," "," "," "},
             {" "," "," "," "," "," "," "," "}
             };
-        */
+        
         String binaryStr;
         //For every square on the chess board
         for(int i = 0; i < 64; i++){

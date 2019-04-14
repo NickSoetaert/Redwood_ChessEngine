@@ -231,7 +231,6 @@ public class Board
     // creates a new board that is a copy of current board but with move made
     public Board newBoardMove(int startIndex,int finishIndex)
     {
-
         Board newBoard = new Board(WP, WN, WB, WR, WQ, WK,BP, BN, BB, BR, BQ, BK);
         newBoard.move(startIndex, finishIndex);  
         return newBoard;

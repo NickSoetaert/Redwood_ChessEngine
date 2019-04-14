@@ -364,17 +364,23 @@ public class MoveGenerator
             possibleMoves = possibleMoves | (currPawn >> 8)&~ranks[7]&empty;
 
             //Forward 2 squares
-            possibleMoves = possibleMoves | (currPawn >> 16)&empty&(empty >> 8);
+            possibleMoves = possibleMoves | (currPawn >> 16)&empty&(empty >> 8) & ranks[3];
 
-            if (Math.abs(last_Move_Start - last_Move_End) == 18)
-            {
-                // En Passant from right
-                possibleMoves = possibleMoves | (((currPawn>>1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
-                
-                // En Passant from left 
-                possibleMoves = possibleMoves | (((currPawn<<1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
+            //En passant
+            if(pastMoves.size() >= 4){
+
+                String prevMove = pastMoves.get(pastMoves.size()-1);
+                int[] prev = Board.UCItoIndex(prevMove);
+                if(Math.abs(prev[0] - prev[1]) == 18){
+                    System.out.println(prev[0] + " " + prev[1]);
+
+                    //en passant from right
+                    possibleMoves = possibleMoves | (((currPawn>>1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
+
+                    //en passant from left
+                    possibleMoves = possibleMoves | (((currPawn<<1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
+                }
             }
-
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
 
@@ -432,7 +438,7 @@ public class MoveGenerator
             possibleMoves = possibleMoves | (currPawn << 8)&~ranks[7]&empty;
 
             //Forward 2 squares
-            possibleMoves = possibleMoves | (currPawn << 16)&empty&(empty >> 8);
+            possibleMoves = possibleMoves | (currPawn << 16)&empty&(empty >> 8) & ranks[4];
 
             if (Math.abs(last_Move_Start - last_Move_End) == 18)
             {
