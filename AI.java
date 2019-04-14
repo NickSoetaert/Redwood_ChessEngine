@@ -5,11 +5,11 @@ public class AI
 {
     public Board currentGame;
     public float WhiteTime,BlackTime;
+    
     public AI(Board currentGame)
     {
         this.currentGame = currentGame;
     }
-
 
     public String Think(ArrayList<String> moves)
     {
