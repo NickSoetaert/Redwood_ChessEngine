@@ -42,7 +42,7 @@ public class BoardGenerator{
         
         {
             {"r","n","b","q","k","b","n","r"},
-            {"p","p","p","p","p","p","p","p"},
+            {"z","z","z","z","z","z","z","z"},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
@@ -83,7 +83,7 @@ public class BoardGenerator{
                     break;
                 case "K": WK += stringToBinary(binaryStr);
                     break;
-                case "p": BP += stringToBinary(binaryStr);
+                case "z": BP += stringToBinary(binaryStr);
                     break;
                 case "n": BN += stringToBinary(binaryStr);
                     break;
@@ -111,7 +111,7 @@ public class BoardGenerator{
         String chessBoard[][] = new String[8][8];
         
         for(int i = 0; i < 64; i++){
-            chessBoard[i/8][i%8] = " ";
+            chessBoard[i/8][i%8] = "   ";
         }
 
         for(int i = 0; i < 64; i++){
@@ -119,25 +119,35 @@ public class BoardGenerator{
              * Shift bits i bits to the right
              * After shift, if leading bit is a 1, there is a piece on the current square
              */
-            if(((curBoard.get(BitBoardEnum.WP)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "P";}
-            if(((curBoard.get(BitBoardEnum.WN)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "N";}
-            if(((curBoard.get(BitBoardEnum.WB)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "B";}
-            if(((curBoard.get(BitBoardEnum.WR)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "R";}
-            if(((curBoard.get(BitBoardEnum.WQ)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "Q";}
-            if(((curBoard.get(BitBoardEnum.WK)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "K";}
-            if(((curBoard.get(BitBoardEnum.BP)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "p";}
-            if(((curBoard.get(BitBoardEnum.BN)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "n";}
-            if(((curBoard.get(BitBoardEnum.BB)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "b";}
-            if(((curBoard.get(BitBoardEnum.BR)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "r";}
-            if(((curBoard.get(BitBoardEnum.BQ)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "q";}
-            if(((curBoard.get(BitBoardEnum.BK)>>i) & 1) == 1) {chessBoard[i/8][i%8] = "k";}
+            if(((curBoard.get(BitBoardEnum.WP)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " P ";}
+            if(((curBoard.get(BitBoardEnum.WN)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " N ";}
+            if(((curBoard.get(BitBoardEnum.WB)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " B ";}
+            if(((curBoard.get(BitBoardEnum.WR)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " R ";}
+            if(((curBoard.get(BitBoardEnum.WQ)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " Q ";}
+            if(((curBoard.get(BitBoardEnum.WK)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " K ";}
+            if(((curBoard.get(BitBoardEnum.BP)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " z ";}
+            if(((curBoard.get(BitBoardEnum.BN)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " n ";}
+            if(((curBoard.get(BitBoardEnum.BB)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " b ";}
+            if(((curBoard.get(BitBoardEnum.BR)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " r ";}
+            if(((curBoard.get(BitBoardEnum.BQ)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " q ";}
+            if(((curBoard.get(BitBoardEnum.BK)>>i) & 1) == 1) {chessBoard[i/8][i%8] = " k ";}
         }
 
-        for(int i = 0; i < 8; i++){
-            System.out.println(8-i + " " + Arrays.toString(chessBoard[i]));
+        int j = 0;
+        for(String[] arr : chessBoard){
+            System.out.println("   ________________________________________");
+            System.out.print(8-j + " |");
+            j++;
+            for(String c : arr){
+                System.out.print(c + " |");
+            }
+            System.out.println("");
         }
-        System.out.println("   A  B  C  D  E  F  G  H\n");
+
+        System.out.println("   ========================================");
+        System.out.println("    A  | B  | C  | D  | E  | F  | G  | H  |\n");
     }
+    
 
     //Takes a 64 character string of 1s and 0s and converts that into a 64 bit binary representation
     private static long stringToBinary(String binaryStr){
