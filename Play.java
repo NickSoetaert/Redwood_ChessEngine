@@ -23,7 +23,10 @@ public class Play{
 
         System.out.println("~~~" + whiteMoves);
         System.out.println("~~~" + blackMoves);
-        
 
+
+        Game g = new Game();
+        g.PlayAIDumbieGame();
+        
     }
 }
