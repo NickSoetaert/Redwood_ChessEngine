@@ -82,7 +82,7 @@ public class Game
             if (AIturn == curTurn)
             {
 
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",4);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",6);
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
@@ -103,7 +103,7 @@ public class Game
             else
             {
 
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",4);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",6);
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
                 System.out.println(OurGuy.ConfidenceinLastMove);

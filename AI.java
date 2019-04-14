@@ -14,7 +14,7 @@ public class AI
 
     public String Think(ArrayList<String> moves,String Color,int depth)
     {
-        return FindBestMove(currentGame, depth,new ArrayList<String>(),Color);
+        return FindBestMove(currentGame, depth ,new ArrayList<String>(),Color);
     }
     public void act(String action)
     {
@@ -34,7 +34,7 @@ public class AI
         if (ismax)
         {
 
-            int best = 1000;
+            int best = -1000;
             ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history).getAlg();
 
             for (int i = 0; i < childMoves.size(); ++i)
@@ -48,7 +48,7 @@ public class AI
         }
         else
         {
-            int best = -1000;
+            int best = 1000;
             ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history).getAlg();
 
             for (int i = 0; i < childMoves.size(); ++i)
@@ -124,7 +124,6 @@ public class AI
 
         for (int i = 0; i < childMoves.size(); ++i)
         {
-            // In an ideal world we would make an undo fucntion that can undo a move 
 
             if (color == "White")
             {
@@ -145,7 +144,7 @@ public class AI
                     best_move = childMoves.get(i);
                 }
             }
-            System.out.println("most choice " + i + " of  " + childMoves.size() + "current best evaluated to be : " + BestScore);
+            //System.out.println("most choice " + i + " of  " + childMoves.size() + "current best evaluated to be : " + BestScore);
 
         }
 

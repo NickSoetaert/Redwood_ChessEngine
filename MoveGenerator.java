@@ -90,7 +90,7 @@ public class MoveGenerator
 
         long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
 
-        move.combine(possibleBlackPawnMoves(board, pastMoves));
+        move.combine(possibleWhitePawnMoves(board, pastMoves));
         move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN)));
         move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB)));
         move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.WR)));
@@ -119,7 +119,7 @@ public class MoveGenerator
     public static long getSafeKingSquares(Board board, String color){
         if(color == "white"){
             Move move = new Move();
-            long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
+            long uncapturablePieces = board.GetWhitePieces(); | board.get(BitBoardEnum.BK);
             move.combine(possibleBlackPawnMoves(board, new ArrayList<>()));
             move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN)));
             move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB)));
