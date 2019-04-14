@@ -499,10 +499,10 @@ public class MoveGenerator
             int pawnLocation = Long.numberOfTrailingZeros(currPawn);
 
             //Capture left
-            possibleMoves = (currPawn << 9)&~files[7]&capturablePieces;
+            possibleMoves = (currPawn << 9)&~files[0]&capturablePieces;
 
             //Capture right
-            possibleMoves = possibleMoves | (currPawn << 7)&~files[0]&capturablePieces;
+            possibleMoves = possibleMoves | (currPawn << 7)&~files[7]&capturablePieces;
 
             //Forward 1 square
             possibleMoves = possibleMoves | (currPawn << 8)&~ranks[7]&empty;
