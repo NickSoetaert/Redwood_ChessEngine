@@ -90,9 +90,24 @@ public class MoveGenerator
 
     public static ArrayList<String> possibleWhiteMoves(Board board, String pastMove){
 
+        ArrayList<String> legalMoves = new ArrayList<>();
+        ArrayList<String> temp = new ArrayList<>();
+        long pawnMoves = 0L, knightMoves = 0L, bishopMoves = 0L, rookMoves = 0L, queenMoves = 0L, kingMoves = 0L;
         long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
+
+        temp = possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN));
+
+        for(String s : temp){
+            legalMoves.add(s);
+        }
+
+        temp = possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB));
+
+        for(String s : temp){
+            legalMoves.add(s);
+        }
         
-        return possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN));
+        return legalMoves;
 
     }
 
@@ -118,7 +133,6 @@ public class MoveGenerator
         while(currKnight != 0)
         {
             int knightLocation = Long.numberOfTrailingZeros(currKnight);
-            System.out.println("Knight location: " + knightLocation);
 
             //If the knight is in the upper left corner, but far over enough to not go off the board
             //18 represents the c6 square, furthest in the corner the knight can move safely up and to the left
@@ -159,6 +173,7 @@ public class MoveGenerator
             while (singlePossibleMove != 0)
             {
                 int index = Long.numberOfTrailingZeros(singlePossibleMove);
+
                 singleAlgebraicMove = "" + fileToChar(knightLocation%8) + (8 - knightLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
                 algebraicLegalMoves.add(singleAlgebraicMove);
@@ -168,12 +183,55 @@ public class MoveGenerator
                 //and set single possible move to next possible move
                 singlePossibleMove = possibleMoves & ~(possibleMoves-1);
             }
-            //update current knight
+            //update current knight to the next knight
             N&=~currKnight;
             currKnight=N&~(N-1);
         }
         return algebraicLegalMoves; 
         
+    }
+
+
+    public static ArrayList<String> possibleBishopMoves(Board b, long uncapturablePieces, long B){
+        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+        String singleAlgebraicMove = "";
+        long possibleMoves;
+        long currBishop;
+        currBishop=B&~(B-1); //Gets FIRST occurance of a Bishop
+
+        while(currBishop != 0){
+            int bishopLocation = Long.numberOfTrailingZeros(currBishop);
+
+            possibleMoves = generateDiagonalMoves(b, bishopLocation) & ~uncapturablePieces;
+            BoardGenerator.drawPiece(possibleMoves);
+
+
+
+            //Gets a SINGLE possible move
+            long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
+
+
+            //Note this is a nested loop.
+            //While there are still moves left for this specific bishop...
+            while (singlePossibleMove != 0)
+            {
+                int index = Long.numberOfTrailingZeros(singlePossibleMove);
+
+                singleAlgebraicMove = "" + fileToChar(bishopLocation%8) + (8 - bishopLocation/8)
+                                         + fileToChar(index%8) + (8 - index/8);
+                algebraicLegalMoves.add(singleAlgebraicMove);
+
+                //We processed a possible move, so remove a single possible move from possible moves
+                possibleMoves = possibleMoves & ~singlePossibleMove;
+                //and set single possible move to next possible move
+                singlePossibleMove = possibleMoves & ~(possibleMoves-1);
+            }
+
+            //update current bishop to the next bishop
+            B &= ~currBishop;
+            currBishop=B&~(B-1);
+        }
+        return algebraicLegalMoves;
     }
 
 
