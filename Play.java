@@ -18,8 +18,12 @@ public class Play{
 
         //g.PlayDumbieGame();
     
+        //ystem.out.println("am i chaning");
         Game g = new Game();
-        g.PlayDumbieGame();
-        
+        g.PlayAIDumbieGame();
+        //int ints[] = Board.UCItoIndex("c7c5");
+
+        //System.out.println(ints[0] + " , " + ints[1]);
+        //PlayAIDumbieGame
     }
 }

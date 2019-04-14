@@ -367,18 +367,23 @@ public class MoveGenerator
             possibleMoves = possibleMoves | (currPawn >> 16)&empty&(empty >> 8) & ranks[3];
 
             //En passant
-            if(pastMoves.size() >= 4){
+            if(pastMoves.size() >= 1){
 
                 String prevMove = pastMoves.get(pastMoves.size()-1);
+                System.out.println("prev[0] = " + prevMove);
                 int[] prev = Board.UCItoIndex(prevMove);
-                if(Math.abs(prev[0] - prev[1]) == 18){
+                if(Math.abs(prev[0] - prev[1]) == 16){
                     System.out.println(prev[0] + " " + prev[1]);
-
+                    
                     //en passant from right
-                    possibleMoves = possibleMoves | (((currPawn>>1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
-
+                    possibleMoves = possibleMoves | ((((currPawn>>1)&b.get(BitBoardEnum.BP)&ranks[4]&(files[Board.getFile(prev[0])])))>>8);
+                    //BoardGenerator.drawPiece(files[Board.getFile(prev[0])]);
+                    //System.out.println("prev[0] = " + Board.getFile(prev[0]));
+                    
                     //en passant from left
-                    possibleMoves = possibleMoves | (((currPawn<<1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
+
+                    possibleMoves = possibleMoves | ((((currPawn<<1)&b.get(BitBoardEnum.BP)&ranks[4]&files[Board.getFile(prev[0])]))>>8);
+                    //BoardGenerator.drawPiece(possibleMoves);
                 }
             }
             //Gets a SINGLE possible move

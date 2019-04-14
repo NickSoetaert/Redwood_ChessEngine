@@ -303,7 +303,7 @@ public class Board
     }
     public static int getFile(int Index)
     {
-        return Index % 8;
+        return 8 - (Index % 8);
     }
 
     //Will return centipawn evaluation

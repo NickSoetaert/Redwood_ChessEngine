@@ -35,6 +35,8 @@ public class Game
             if (AIturn == curTurn)
             {
                 BoardGenerator.drawBoard(board);
+                System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves));
+                System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves).size());
                 advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves));
                 OurGuy.act(advisedAction);
                 pastMoves.add(advisedAction);
@@ -49,6 +51,7 @@ public class Game
                 UCIinput = scanner.nextLine();
                 board.move(UCIinput);
                 pastMoves.add(UCIinput);
+                
             }
             i++;
         }
@@ -64,7 +67,7 @@ public class Game
         Turn AIturn = Turn.WHITE;
         Turn userTurn = Turn.BLACK;
         boolean Watchable = true;
-        int Sleep_Time = 2500;
+        int Sleep_Time = 0;
         String advisedAction = "noneTaken";
 
 
