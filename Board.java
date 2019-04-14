@@ -237,6 +237,14 @@ public class Board
         return newBoard;
     }
 
+    public Board newBoardMove(String UCIin)
+    {
+
+        Board newBoard = new Board(WP, WN, WB, WR, WQ, WK,BP, BN, BB, BR, BQ, BK);
+        newBoard.move(UCIin);  
+        return newBoard;
+    }
+
     public long GetWhitePieces()
     {
         return (WP|WN|WB|WR|WQ|WK);
