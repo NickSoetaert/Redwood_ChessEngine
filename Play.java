@@ -14,7 +14,5 @@ public class Play{
         ArrayList<String> x = MoveGenerator.possibleWhiteMoves(board, "");
         //ArrayList<String> y = MoveGenerator.possibleBlackMoves(board, "");
         System.out.println("~~~" + x);
-        
-
     }
 }

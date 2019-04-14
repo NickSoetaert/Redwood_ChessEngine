@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Game
 {
+    public AI OurGuy;
     public enum Turn {BLACK, WHITE}
     
 
@@ -9,31 +10,34 @@ public class Game
     {
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
+        OurGuy = new AI(board);
         boolean CheckMate = false;
         Turn curTurn = Turn.WHITE;
         String UCIinput;
+        Turn AIturn = Turn.WHITE;
+        Turn userTurn = Turn.BLACK;
+        String advisedAction = "noneTaken";
+
 
         // while (!CheckMate)
         while(true)
         {
-            System.out.println("is this working");
-            BoardGenerator.drawBoard(board);
-            System.out.println(curTurn.toString() + "'s turn please type a move : ");
-
-            UCIinput = scanner.nextLine();
-            int test[] = Board.UCItoIndex(UCIinput);
-            System.out.println(test[0] + ", " + test[1] );
-            board.move(UCIinput);
-
-            if (curTurn == Turn.BLACK)
+            if (AIturn == curTurn)
             {
-                curTurn = Turn.WHITE;
+                BoardGenerator.drawBoard(board);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, "junk for now"));
+                OurGuy.act(advisedAction);
+                curTurn = userTurn;
             }
             else
             {
-                curTurn = Turn.BLACK;
+                BoardGenerator.drawBoard(board);
+                System.out.println("AI action : ".concat(advisedAction));
+                curTurn = AIturn;
+                System.out.println(curTurn.toString() + "User's turn please type a move : ");
+                UCIinput = scanner.nextLine();
+                board.move(UCIinput);
             }
-
         }
     }
 }
