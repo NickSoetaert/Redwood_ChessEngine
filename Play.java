@@ -23,12 +23,14 @@ public class Play{
         ArrayList<String> blackMoves = MoveGenerator.possibleBlackMoves(board, "temp");
 
         System.out.println("~~~" + whiteMoves);
-        //System.out.println("~~~" + blackMoves);
+        System.out.println("~~~" + blackMoves);
 
         //Game g = new Game();
 
         //g.PlayDumbieGame();
+    
+        Game g = new Game();
+        g.PlayAIDumbieGame();
         
-
     }
 }
