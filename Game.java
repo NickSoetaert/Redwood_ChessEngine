@@ -1,17 +1,22 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Game
 {
     public AI OurGuy;
     public enum Turn {BLACK, WHITE}
-    
+
+
+    //~!~!~!~!~!~!~!~!~!~!~!~
+    public ArrayList<String> pastMoves = new ArrayList<>();
+
+
 
     public void PlayDumbieGame()
     {
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
         OurGuy = new AI(board);
-        boolean CheckMate = false;
         Turn curTurn = Turn.WHITE;
         String UCIinput;
         Turn AIturn = Turn.WHITE;
@@ -20,13 +25,15 @@ public class Game
 
 
         // while (!CheckMate)
-        while(true)
+        int i = 0;
+        while(i < 100000)
         {
             if (AIturn == curTurn)
             {
                 BoardGenerator.drawBoard(board);
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, "junk for now"));
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves));
                 OurGuy.act(advisedAction);
+                pastMoves.add(advisedAction);
                 curTurn = userTurn;
             }
             else
@@ -34,11 +41,14 @@ public class Game
                 BoardGenerator.drawBoard(board);
                 System.out.println("AI action : ".concat(advisedAction));
                 curTurn = AIturn;
-                System.out.println(curTurn.toString() + "User's turn please type a move : ");
+                System.out.println(curTurn.toString() + " user's turn, please type a move : ");
                 UCIinput = scanner.nextLine();
                 board.move(UCIinput);
+                pastMoves.add(UCIinput);
             }
+            i++;
         }
+        scanner.close();
     }
 
     public void PlayAIDumbieGame()
@@ -46,9 +56,7 @@ public class Game
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
         OurGuy = new AI(board);
-        boolean CheckMate = false;
         Turn curTurn = Turn.WHITE;
-        String UCIinput;
         Turn AIturn = Turn.WHITE;
         Turn userTurn = Turn.BLACK;
         boolean Watchable = true;
@@ -57,12 +65,13 @@ public class Game
 
 
         // while (!CheckMate)
-        while(true)
+        int i = 0;
+        while(i < 1000000)
         {
             if (AIturn == curTurn)
             {
                 BoardGenerator.drawBoard(board);
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, "junk for now"));
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves));
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
                 BoardGenerator.drawBoard(board);
@@ -81,7 +90,7 @@ public class Game
             else
             {
                 BoardGenerator.drawBoard(board);
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, "junk for now"));
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves));
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
                 BoardGenerator.drawBoard(board);
@@ -97,6 +106,8 @@ public class Game
                     }
                 }
             }
+            i++;
         }
+        scanner.close();
     }
 }

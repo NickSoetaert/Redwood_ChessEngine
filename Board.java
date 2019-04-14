@@ -1,7 +1,6 @@
 public class Board
 {   
     private long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
-    private String UCI_LastMove = ""; 
 
 
     // constructor
@@ -105,19 +104,14 @@ public class Board
     {
         int movevals[] = Board.UCItoIndex(UCIin);
         this.move(movevals[0], movevals[1]);
-        System.out.println(movevals[0]);
-        System.out.println(movevals[1]);
-
     }
-
 
     // moves a peice on local board
     public void move(int startIndex,int finishIndex)
     {
-
         BitBoardEnum taken = getPeiceType(finishIndex);
         BitBoardEnum moved = getPeiceType(startIndex);
-        System.out.println(taken + ", " + moved);
+        
         // flipps bits on origin and destination bits
         switch(moved)
         {
@@ -243,7 +237,6 @@ public class Board
         return newBoard;
     }
 
-
     public long GetWhitePieces()
     {
         return (WP|WN|WB|WR|WQ|WK);
@@ -253,7 +246,6 @@ public class Board
     {
         return (BP|BN|BB|BR|BQ|BK);
     }
-
 
     public BitBoardEnum getPeiceType(int i)
     {
@@ -272,29 +264,17 @@ public class Board
         return null;
     }
 
-    //
     public static int[] UCItoIndex(String UCI)
     {
         int returnArray[] = new int[2];
 
-        //returnArray[0] = 63 - ('h' - UCI.charAt(0) + (8 * (UCI.charAt(1)-'1')));
-
         returnArray[0] = 8*(UCI.charAt(1)-'1');
         returnArray[0] += 'h' - (UCI.charAt(0));
         returnArray[0] = 63 - returnArray[0];
-        System.out.println("issue");
-        System.out.println(UCI.charAt(0));
-        System.out.println((int)'a');
-        System.out.println('h' - UCI.charAt(0));
-        System.out.println(Integer.toString(returnArray[0]));
-        System.out.println();
-        
 
         returnArray[1] = 8*(UCI.charAt(3)-'1');
         returnArray[1] += 'h' - (UCI.charAt(2));
         returnArray[1] = 63 - returnArray[1];
-        System.out.println(Integer.toString(returnArray[1]));
-
 
         return returnArray;
     }
@@ -319,7 +299,8 @@ public class Board
         return Index % 8;
     }
 
-    // will return centapawn notation
+    //Will return centipawn evaluation
+    // A positive score favors white, negative favors black
     public int eval()
     {
         return 0;

@@ -84,13 +84,13 @@ public class MoveGenerator
         }
     }
 
-    public static ArrayList<String> possibleWhiteMoves(Board board, String pastMove){
+    public static ArrayList<String> possibleWhiteMoves(Board board, ArrayList<String> pastMoves){
 
         ArrayList<String> legalMoves = new ArrayList<>();
         ArrayList<String> temp = new ArrayList<>();
         long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
 
-        temp = possibleWhitePawnMoves(board, "temp");
+        temp = possibleWhitePawnMoves(board, pastMoves);
         for(String s : temp){
             legalMoves.add(s);
         }
@@ -118,13 +118,13 @@ public class MoveGenerator
         return legalMoves;
     }
 
-    public static ArrayList<String> possibleBlackMoves(Board board, String pastMove){
+    public static ArrayList<String> possibleBlackMoves(Board board, ArrayList<String> pastMoves){
 
         ArrayList<String> legalMoves = new ArrayList<>();
         ArrayList<String> temp = new ArrayList<>();
         long uncapturablePieces = board.GetBlackPieces() | board.get(BitBoardEnum.WK);
 
-        temp = possibleBlackPawnMoves(board, "temp");
+        temp = possibleBlackPawnMoves(board, pastMoves);
         for(String s : temp){
             legalMoves.add(s);
         }
@@ -180,21 +180,16 @@ public class MoveGenerator
             //If the knight is on the left side of the board,
             //  then we must eliminate any squares on the g or h files (because of wrapping)
             if(knightLocation % 8 < 4){
+                //Take away moves that wrapped around the board, or land on uncapable pieces
                 possibleMoves = possibleMoves & ~(files[6] | files[7]);
-                
-                //Now take away squares occupied by uncapturable pieces
                 possibleMoves = possibleMoves & ~uncapturablePieces;
-                BoardGenerator.drawPiece(possibleMoves);
             }
             //If knight is on right side of board,
             //  eliminate any squares on a or b files
             else {
-                System.out.println("Strip a and b");
+                //Take away moves that wrapped around the board, or land on uncapable pieces
                 possibleMoves = possibleMoves & ~(files[0] | files[1]);
-
-                //Take away squares occupied by uncappable pieces
                 possibleMoves = possibleMoves & ~uncapturablePieces;
-                BoardGenerator.drawPiece(possibleMoves);
             }
 
             //Gets a SINGLE possible move
@@ -222,7 +217,6 @@ public class MoveGenerator
         
     }
 
-
     public static ArrayList<String> possibleBishopMoves(Board b, long uncapturablePieces, long B){
         ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
         String singleAlgebraicMove = "";
@@ -234,7 +228,6 @@ public class MoveGenerator
             int bishopLocation = Long.numberOfTrailingZeros(currBishop);
 
             possibleMoves = generateDiagonalMoves(b, bishopLocation) & ~uncapturablePieces;
-            BoardGenerator.drawPiece(possibleMoves);
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -262,7 +255,6 @@ public class MoveGenerator
         return algebraicLegalMoves;
     }
 
-
     public static ArrayList<String> possibleRookMoves(Board b, long uncapturablePieces, long R){
         ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
         String singleAlgebraicMove = "";
@@ -274,7 +266,6 @@ public class MoveGenerator
             int rookLocation = Long.numberOfTrailingZeros(currRook);
 
             possibleMoves = generateVerticalHorizontalMoves(b, rookLocation) & ~uncapturablePieces;
-            BoardGenerator.drawPiece(possibleMoves);
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -313,9 +304,8 @@ public class MoveGenerator
             int queenLocation = Long.numberOfTrailingZeros(currQueen);
 
             possibleMoves = (generateVerticalHorizontalMoves(b, queenLocation) | 
-                            generateDiagonalMoves(b, queenLocation)) & 
-                            ~uncapturablePieces;
-            BoardGenerator.drawPiece(possibleMoves);
+                             generateDiagonalMoves(b, queenLocation)) & 
+                             ~uncapturablePieces;
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -343,7 +333,7 @@ public class MoveGenerator
         return algebraicLegalMoves;
     }
 
-    public static ArrayList<String> possibleWhitePawnMoves(Board b, String pastMove){
+    public static ArrayList<String> possibleWhitePawnMoves(Board b, ArrayList<String> pastMoves){
 
         // These should be actually given rather then hardcoded
         int last_Move_Start = 57, last_Move_End = 39;
@@ -360,8 +350,6 @@ public class MoveGenerator
         long currPawn = b.get(BitBoardEnum.WP);
 
         currPawn=WP&~(WP-1); //Gets FIRST occurance of a pawn
-
-        BoardGenerator.drawPiece(currPawn);
 
         while(currPawn != 0){
             int pawnLocation = Long.numberOfTrailingZeros(currPawn);
@@ -387,13 +375,11 @@ public class MoveGenerator
                 possibleMoves = possibleMoves | (((currPawn<<1)&b.get(BitBoardEnum.BP)&ranks[4]&files[last_Move_Start%8])>>8);
             }
 
-            BoardGenerator.drawPiece(possibleMoves);
-
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
 
             //Note this is a nested loop.
-            //While there are still moves left for this specific bishop...
+            //While there are still moves left for this specific pawn...
             while (singlePossibleMove != 0)
             {
                 int index = Long.numberOfTrailingZeros(singlePossibleMove);
@@ -413,10 +399,9 @@ public class MoveGenerator
             currPawn = WP & ~(WP-1);
         }
         return algebraicLegalMoves;
-
     }
 
-    public static ArrayList<String> possibleBlackPawnMoves(Board b, String pastMove){
+    public static ArrayList<String> possibleBlackPawnMoves(Board b, ArrayList<String> pastMoves){
 
         // These should be actually given rather then hardcoded
         int last_Move_Start = 57, last_Move_End = 39;
@@ -458,13 +443,11 @@ public class MoveGenerator
                 possibleMoves = possibleMoves | (((currPawn<<1)&b.get(BitBoardEnum.WP)&ranks[5]&files[last_Move_Start%8])>>8);
             }
 
-            BoardGenerator.drawPiece(possibleMoves);
-
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
 
             //Note this is a nested loop.
-            //While there are still moves left for this specific bishop...
+            //While there are still moves left for this specific pawn...
             while (singlePossibleMove != 0)
             {
                 int index = Long.numberOfTrailingZeros(singlePossibleMove);
@@ -484,7 +467,6 @@ public class MoveGenerator
             currPawn = BP & ~(BP-1);
         }
         return algebraicLegalMoves;
-
     }
 
     private static long generateVerticalHorizontalMoves(Board board, int startSquare){

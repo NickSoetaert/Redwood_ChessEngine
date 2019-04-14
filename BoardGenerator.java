@@ -9,7 +9,7 @@ public class BoardGenerator{
             String boardString[][] = {
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
-            {" "," "," ","x"," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
@@ -42,7 +42,7 @@ public class BoardGenerator{
             {"r","n","b","q","k","b","n","r"},
             {"p","p","p","p","p","p","p","p"},
             {" "," "," "," "," "," "," "," "},
-            {" "," "," ","Q"," "," "," "," "},
+            {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {" "," "," "," "," "," "," "," "},
             {"P","P","P","P","P","P","P","P"},
@@ -99,7 +99,7 @@ public class BoardGenerator{
 
         }
         Board curBoard = new Board(WP, WN, WB, WR, WQ, WK, BP, BN, BB, BR, BQ, BK);
-        drawBoard(curBoard);
+        //drawBoard(curBoard);
         return curBoard;
 
     }
