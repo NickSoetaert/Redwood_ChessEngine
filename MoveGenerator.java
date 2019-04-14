@@ -82,8 +82,6 @@ public class MoveGenerator
             case 7: return 'h';
             default: return ' ';
         }
-        
-
     }
 
     public static ArrayList<String> possibleWhiteMoves(Board board, String pastMove){

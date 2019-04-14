@@ -8,6 +8,7 @@ public class Play{
         Board board = BoardGenerator.initStandardBoard();
 
 
+
         //MoveGenerator.generateVerticalHorizontalMoves(board, 43);
         //MoveGenerator.generateDiagonalMoves(board, 43);
 
@@ -22,7 +23,11 @@ public class Play{
         ArrayList<String> blackMoves = MoveGenerator.possibleBlackMoves(board, "temp");
 
         System.out.println("~~~" + whiteMoves);
-        System.out.println("~~~" + blackMoves);
+        //System.out.println("~~~" + blackMoves);
+
+        //Game g = new Game();
+
+        //g.PlayDumbieGame();
         
 
     }
