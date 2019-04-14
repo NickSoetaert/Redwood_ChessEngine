@@ -310,7 +310,7 @@ public class Board
     // A positive score favors white, negative favors black
     public int eval()
     {
-        System.out.println("Eval " + this.getMaterialImbalance());
+        //System.out.println("Eval " + this.getMaterialImbalance());
         return this.getMaterialImbalance();
     }
 
