@@ -11,9 +11,17 @@ public class Play{
         //MoveGenerator.generateVerticalHorizontalMoves(board, 43);
         //MoveGenerator.generateDiagonalMoves(board, 43);
 
-        ArrayList<String> x = MoveGenerator.possibleWhiteMoves(board, "");
+        //ArrayList<String> x = MoveGenerator.possibleWhiteMoves(board, "");
         //ArrayList<String> y = MoveGenerator.possibleBlackMoves(board, "");
-        System.out.println("~~~" + x);
+        //ArrayList<String> x = MoveGenerator.possibleWhitePawnMoves(board, "a");
+
+        //ArrayList<String> x = MoveGenerator.possibleBlackPawnMoves(board, "a");
+
+        ArrayList<String> whiteMoves = MoveGenerator.possibleWhiteMoves(board, "temp");
+        ArrayList<String> blackMoves = MoveGenerator.possibleBlackMoves(board, "temp");
+
+        System.out.println("~~~" + whiteMoves);
+        System.out.println("~~~" + blackMoves);
         
 
     }
