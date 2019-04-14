@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Play{
     public static void main(String[] args){
 
@@ -9,7 +11,11 @@ public class Play{
         MoveGenerator.generateVerticalHorizontalMoves(board, 43);
         MoveGenerator.generateDiagonalMoves(board, 43);
 
-        MoveGenerator.possibleWhiteMoves(board, "");
+        ArrayList<String> x = MoveGenerator.possibleWhiteMoves(board, "");
+        ArrayList<String> y = MoveGenerator.possibleBlackMoves(board, "");
+        System.out.println("~~~" + x);
+        BoardGenerator.drawPiece(7150);
+        
 
     }
 }
