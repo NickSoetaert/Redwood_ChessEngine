@@ -15,9 +15,17 @@ public class AI
     {
         Random rand = new Random();
 
-        String bestMatch = moves.get(rand.nextInt(moves.size() - 1));
+        System.out.println(moves.size());
+        System.out.println("wait up");
 
-        return bestMatch;
+        if (moves.size() > 1)
+        {
+            return moves.get(rand.nextInt(moves.size()));
+        }
+        else 
+        {
+            return moves.get(0);
+        }
     }
     public void act(String action)
     {
