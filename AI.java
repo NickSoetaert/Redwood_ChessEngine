@@ -5,6 +5,7 @@ public class AI
 {
     public Board currentGame;
     public float WhiteTime,BlackTime;
+    public String ConfidenceinLastMove;
     
     public AI(Board currentGame)
     {
@@ -13,19 +14,6 @@ public class AI
 
     public String Think(ArrayList<String> moves,String Color)
     {
-        //Random rand = new Random();
-
-        System.out.println(moves.size());
-        System.out.println("wait up");
-
-        /*if (moves.size() > 1)
-        {
-            return moves.get(rand.nextInt(moves.size()));
-        }
-        else 
-        {
-            return moves.get(0);
-        }*/
         return FindBestMove(currentGame, 11,new ArrayList<String>(),Color);
     }
     public void act(String action)
@@ -163,8 +151,9 @@ public class AI
             }
         }
 
-        BoardGenerator.drawBoard(currentGame);
-        System.out.println("I think the best move is " + best_move + " it has a score of  : " + BestScore);
+        //BoardGenerator.drawBoard(currentGame);
+        //System.out.println("I think the best move is " + best_move + " it has a score of  : " + BestScore);
+        ConfidenceinLastMove = "I think the best move is " + best_move + " it has a score of  : " + BestScore;
         return best_move;
     }
 }

@@ -77,10 +77,11 @@ public class Game
         {
             if (AIturn == curTurn)
             {
-                BoardGenerator.drawBoard(board);
                 advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves),"White");
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("WHITE AI action : ".concat(advisedAction));
                 BoardGenerator.drawBoard(board);
                 if (Watchable)
                 {
@@ -96,10 +97,11 @@ public class Game
             }
             else
             {
-                BoardGenerator.drawBoard(board);
                 advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves),"Black");
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("BLACK AI action : ".concat(advisedAction));
                 BoardGenerator.drawBoard(board);
                 if (Watchable)
                 {
