@@ -8,13 +8,12 @@ public class Play{
         Board board = BoardGenerator.initStandardBoard();
 
 
-        MoveGenerator.generateVerticalHorizontalMoves(board, 43);
-        MoveGenerator.generateDiagonalMoves(board, 43);
+        //MoveGenerator.generateVerticalHorizontalMoves(board, 43);
+        //MoveGenerator.generateDiagonalMoves(board, 43);
 
         ArrayList<String> x = MoveGenerator.possibleWhiteMoves(board, "");
-        ArrayList<String> y = MoveGenerator.possibleBlackMoves(board, "");
+        //ArrayList<String> y = MoveGenerator.possibleBlackMoves(board, "");
         System.out.println("~~~" + x);
-        BoardGenerator.drawPiece(7150);
         
 
     }

@@ -72,7 +72,21 @@ public class MoveGenerator
         72057594037927936L      //a1-a1
     };
 
+    private static char fileToChar(int file){
+        switch(file){
+            case 0: return 'a';
+            case 1: return 'b';
+            case 2: return 'c';
+            case 3: return 'd';
+            case 4: return 'e';
+            case 5: return 'f';
+            case 6: return 'g';
+            case 7: return 'h';
+            default: return ' ';
+        }
+        
 
+    }
 
     public static ArrayList<String> possibleWhiteMoves(Board board, String pastMove){
 
@@ -145,8 +159,8 @@ public class MoveGenerator
             while (singlePossibleMove != 0)
             {
                 int index = Long.numberOfTrailingZeros(singlePossibleMove);
-                BoardGenerator.drawPiece(index);
-                singleAlgebraicMove = ""+(knightLocation/8)+(knightLocation%8)+(index/8)+(index%8);
+                singleAlgebraicMove = "" + fileToChar(knightLocation%8) + (8 - knightLocation/8)
+                                         + fileToChar(index%8) + (8 - index/8);
                 algebraicLegalMoves.add(singleAlgebraicMove);
 
                 //We processed a possible move, so remove a single possible move from possible moves
