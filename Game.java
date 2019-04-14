@@ -35,7 +35,9 @@ public class Game
             if (AIturn == curTurn)
             {
                 BoardGenerator.drawBoard(board);
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves));
+                System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves));
+                System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves).size());
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves), "White");
                 OurGuy.act(advisedAction);
                 pastMoves.add(advisedAction);
                 curTurn = userTurn;
@@ -49,6 +51,7 @@ public class Game
                 UCIinput = scanner.nextLine();
                 board.move(UCIinput);
                 pastMoves.add(UCIinput);
+                
             }
             i++;
         }
@@ -63,8 +66,8 @@ public class Game
         Turn curTurn = Turn.WHITE;
         Turn AIturn = Turn.WHITE;
         Turn userTurn = Turn.BLACK;
-        boolean Watchable = true;
-        int Sleep_Time = 2500;
+        boolean Watchable = false;
+        int Sleep_Time = 2000;
         String advisedAction = "noneTaken";
 
 
@@ -74,10 +77,11 @@ public class Game
         {
             if (AIturn == curTurn)
             {
-                BoardGenerator.drawBoard(board);
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves));
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves),"White");
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("WHITE AI action : ".concat(advisedAction));
                 BoardGenerator.drawBoard(board);
                 if (Watchable)
                 {
@@ -93,10 +97,11 @@ public class Game
             }
             else
             {
-                BoardGenerator.drawBoard(board);
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves));
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves),"Black");
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("BLACK AI action : ".concat(advisedAction));
                 BoardGenerator.drawBoard(board);
                 if (Watchable)
                 {

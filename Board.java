@@ -303,14 +303,14 @@ public class Board
     }
     public static int getFile(int Index)
     {
-        return Index % 8;
+        return 8 - (Index % 8);
     }
 
     //Will return centipawn evaluation
     // A positive score favors white, negative favors black
     public int eval()
     {
-        System.out.println("Eval " + this.getMaterialImbalance());
+        //System.out.println("Eval " + this.getMaterialImbalance());
         return this.getMaterialImbalance();
     }
 
