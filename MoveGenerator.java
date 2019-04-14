@@ -84,86 +84,64 @@ public class MoveGenerator
         }
     }
 
-    public static ArrayList<String> possibleWhiteMoves(Board board, ArrayList<String> pastMoves){
+    public static Move possibleWhiteMoves(Board board, ArrayList<String> pastMoves){
 
-        ArrayList<String> legalMoves = new ArrayList<>();
-        ArrayList<String> temp = new ArrayList<>();
+        Move move = new Move();
+
         long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
 
-        temp = possibleWhitePawnMoves(board, pastMoves);
-        for(String s : temp){
-            legalMoves.add(s);
-        }
+        move.combine(possibleBlackPawnMoves(board, pastMoves));
+        move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN)));
+        move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB)));
+        move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.WR)));
+        move.combine(possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.WQ)));
+        move.combine(possibleKingMoves(board, uncapturablePieces, board.get(BitBoardEnum.WK), "white"));
 
-        temp = possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-
-        temp = possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-        
-        temp = possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.WR));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-
-       temp = possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.WQ)); 
-        for(String s : temp){
-           legalMoves.add(s);
-        }
-
-        temp = possibleKingMoves(board, uncapturablePieces, board.get(BitBoardEnum.WK));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-        return legalMoves;
+        return move;
     }
 
-    public static ArrayList<String> possibleBlackMoves(Board board, ArrayList<String> pastMoves){
+    public static Move possibleBlackMoves(Board board, ArrayList<String> pastMoves){
 
-        ArrayList<String> legalMoves = new ArrayList<>();
-        ArrayList<String> temp = new ArrayList<>();
+        Move move = new Move();
+
         long uncapturablePieces = board.GetBlackPieces() | board.get(BitBoardEnum.WK);
 
-        temp = possibleBlackPawnMoves(board, pastMoves);
-        for(String s : temp){
-            legalMoves.add(s);
-        }
+        move.combine(possibleBlackPawnMoves(board, pastMoves));
+        move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.BN)));
+        move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.BB)));
+        move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.BR)));
+        move.combine(possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.BQ)));
+        move.combine(possibleKingMoves(board, uncapturablePieces, board.get(BitBoardEnum.BK), "black"));
 
-        temp = possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.BN));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-
-        temp = possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.BB));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-        
-        temp = possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.BR));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-
-        temp = possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.BQ));
-        for(String s : temp){
-           legalMoves.add(s);
-        }
-
-        temp = possibleKingMoves(board, uncapturablePieces, board.get(BitBoardEnum.BK));
-        for(String s : temp){
-            legalMoves.add(s);
-        }
-
-        return legalMoves;
+        return move;
     }
 
-    public static ArrayList<String> possibleKnightMoves(Board b, long uncapturablePieces, long N){
+    public static long getSafeKingSquares(Board board, String color){
+        if(color == "white"){
+            Move move = new Move();
+            long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
+            move.combine(possibleBlackPawnMoves(board, new ArrayList<>()));
+            move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN)));
+            move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB)));
+            move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.WR)));
+            move.combine(possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.WQ)));
+            return move.getBitBoard();
+        } else {
+            Move move = new Move();
+            long uncapturablePieces = board.GetBlackPieces() | board.get(BitBoardEnum.WK);
+            move.combine(possibleBlackPawnMoves(board, new ArrayList<>()));
+            move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.BN)));
+            move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.BB)));
+            move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.BR)));
+            move.combine(possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.BQ)));
+            return move.getBitBoard();
+        }
+    }
 
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+    public static Move possibleKnightMoves(Board b, long uncapturablePieces, long N){
+
+        Move move = new Move();
+
         String singleAlgebraicMove = "";
 
         long knightMoveShape = 43234889994L;
@@ -200,6 +178,7 @@ public class MoveGenerator
                 possibleMoves = possibleMoves & ~(files[0] | files[1]);
                 possibleMoves = possibleMoves & ~uncapturablePieces;
             }
+            move.setBitBoard(possibleMoves);
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -211,7 +190,8 @@ public class MoveGenerator
 
                 singleAlgebraicMove = "" + fileToChar(knightLocation%8) + (8 - knightLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
-                algebraicLegalMoves.add(singleAlgebraicMove);
+                move.addAlg(singleAlgebraicMove);
+
 
                 //We processed a possible move, so remove a single possible move from possible moves
                 possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -222,12 +202,12 @@ public class MoveGenerator
             N&=~currKnight;
             currKnight=N&~(N-1);
         }
-        return algebraicLegalMoves; 
+        return move; 
         
     }
 
-    public static ArrayList<String> possibleBishopMoves(Board b, long uncapturablePieces, long B){
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+    public static Move possibleBishopMoves(Board b, long uncapturablePieces, long B){
+        Move move = new Move();
         String singleAlgebraicMove = "";
         long possibleMoves;
         long currBishop;
@@ -237,6 +217,7 @@ public class MoveGenerator
             int bishopLocation = Long.numberOfTrailingZeros(currBishop);
 
             possibleMoves = generateDiagonalMoves(b, bishopLocation) & ~uncapturablePieces;
+            move.setBitBoard(possibleMoves);
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -249,7 +230,7 @@ public class MoveGenerator
 
                 singleAlgebraicMove = "" + fileToChar(bishopLocation%8) + (8 - bishopLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
-                algebraicLegalMoves.add(singleAlgebraicMove);
+                move.addAlg(singleAlgebraicMove);
 
                 //We processed a possible move, so remove a single possible move from possible moves
                 possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -261,11 +242,11 @@ public class MoveGenerator
             B &= ~currBishop;
             currBishop=B&~(B-1);
         }
-        return algebraicLegalMoves;
+        return move;
     }
 
-    public static ArrayList<String> possibleRookMoves(Board b, long uncapturablePieces, long R){
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+    public static Move possibleRookMoves(Board b, long uncapturablePieces, long R){
+        Move move = new Move();
         String singleAlgebraicMove = "";
         long possibleMoves;
         long currRook;
@@ -275,6 +256,7 @@ public class MoveGenerator
             int rookLocation = Long.numberOfTrailingZeros(currRook);
 
             possibleMoves = generateVerticalHorizontalMoves(b, rookLocation) & ~uncapturablePieces;
+            move.setBitBoard(possibleMoves);
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -287,7 +269,7 @@ public class MoveGenerator
 
                 singleAlgebraicMove = "" + fileToChar(rookLocation%8) + (8 - rookLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
-                algebraicLegalMoves.add(singleAlgebraicMove);
+                move.addAlg(singleAlgebraicMove);
 
                 //We processed a possible move, so remove a single possible move from possible moves
                 possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -299,11 +281,11 @@ public class MoveGenerator
             R &= ~currRook;
             currRook=R&~(R-1);
         }
-        return algebraicLegalMoves;
+        return move;
     }
 
-    public static ArrayList<String> possibleQueenMoves(Board b, long uncapturablePieces, long Q){
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+    public static Move possibleQueenMoves(Board b, long uncapturablePieces, long Q){
+        Move move = new Move();
         String singleAlgebraicMove = "";
         long possibleMoves;
         long currQueen;
@@ -315,6 +297,7 @@ public class MoveGenerator
             possibleMoves = (generateVerticalHorizontalMoves(b, queenLocation) | 
                              generateDiagonalMoves(b, queenLocation)) & 
                              ~uncapturablePieces;
+            move.setBitBoard(possibleMoves);
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -327,7 +310,7 @@ public class MoveGenerator
 
                 singleAlgebraicMove = "" + fileToChar(queenLocation%8) + (8 - queenLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
-                algebraicLegalMoves.add(singleAlgebraicMove);
+                move.addAlg(singleAlgebraicMove);
 
                 //We processed a possible move, so remove a single possible move from possible moves
                 possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -339,13 +322,17 @@ public class MoveGenerator
             Q &= ~currQueen;
             currQueen=Q&~(Q-1);
         }
-        return algebraicLegalMoves;
+        return move;
     }
 
-    public static ArrayList<String> possibleKingMoves(Board b, long uncapturablePieces, long K){
+    public static Move possibleKingMoves(Board b, long uncapturablePieces, long K, String color){
     
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+        Move move = new Move();
         String singleAlgebraicMove = "";
+
+        long unsafeSquares = 0l;
+
+        unsafeSquares = getSafeKingSquares(b, color);
 
         long kingMoveShape = 460039L;
         long possibleMoves;
@@ -375,6 +362,10 @@ public class MoveGenerator
             possibleMoves = possibleMoves & ~uncapturablePieces;
         }
 
+        possibleMoves = possibleMoves & ~unsafeSquares;
+
+        move.setBitBoard(possibleMoves);
+
         long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
         while (singlePossibleMove != 0)
         {
@@ -382,7 +373,7 @@ public class MoveGenerator
 
             singleAlgebraicMove = "" + fileToChar(kingLocation%8) + (8 - kingLocation/8)
                                         + fileToChar(index%8) + (8 - index/8);
-            algebraicLegalMoves.add(singleAlgebraicMove);
+            move.addAlg(singleAlgebraicMove);
 
             //We processed a possible move, so remove a single possible move from possible moves
             possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -393,15 +384,10 @@ public class MoveGenerator
         K&=~currKing;
         currKing=K&~(K-1);
         
-        return algebraicLegalMoves; 
+        return move; 
     }
 
-
-
-    public static ArrayList<String> possibleWhitePawnMoves(Board b, ArrayList<String> pastMoves){
-
-        // These should be actually given rather then hardcoded
-        int last_Move_Start = 57, last_Move_End = 39;
+    public static Move possibleWhitePawnMoves(Board b, ArrayList<String> pastMoves){
 
         long WP = b.get(BitBoardEnum.WP);
         long capturablePieces = b.GetBlackPieces() ^ b.get(BitBoardEnum.BK);
@@ -409,7 +395,7 @@ public class MoveGenerator
         long blackPieces = b.GetBlackPieces();
         long empty = ~(blackPieces | whitePieces);
 
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+        Move move = new Move();
         String singleAlgebraicMove = "";
         long possibleMoves;
         long currPawn = b.get(BitBoardEnum.WP);
@@ -424,13 +410,7 @@ public class MoveGenerator
 
             //Capture right
             possibleMoves = possibleMoves | (currPawn >> 7)&~files[0]&capturablePieces;
-
-            //Forward 1 square
-            possibleMoves = possibleMoves | (currPawn >> 8)&~ranks[7]&empty;
-
-            //Forward 2 squares
-            possibleMoves = possibleMoves | (currPawn >> 16)&empty&(empty >> 8) & ranks[3];
-
+            
             //En passant
             if(pastMoves.size() >= 1){
 
@@ -454,6 +434,14 @@ public class MoveGenerator
                     //BoardGenerator.drawPiece((((currPawn<<1)&b.get(BitBoardEnum.BP)&ranks[4]&(files[prev[0] % 8]))>>8));
                 }
             }
+            move.setBitBoard(possibleMoves);
+
+            //Forward 1 square
+            possibleMoves = possibleMoves | (currPawn >> 8)&~ranks[7]&empty;
+
+            //Forward 2 squares
+            possibleMoves = possibleMoves | (currPawn >> 16)&empty&(empty >> 8) & ranks[3];
+
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
 
@@ -465,7 +453,7 @@ public class MoveGenerator
 
                 singleAlgebraicMove = "" + fileToChar(pawnLocation%8) + (8 - pawnLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
-                algebraicLegalMoves.add(singleAlgebraicMove);
+                move.addAlg(singleAlgebraicMove);
 
                 //We processed a possible move, so remove a single possible move from possible moves
                 possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -477,13 +465,10 @@ public class MoveGenerator
             WP &= ~currPawn;
             currPawn = WP & ~(WP-1);
         }
-        return algebraicLegalMoves;
+        return move;
     }
 
-    public static ArrayList<String> possibleBlackPawnMoves(Board b, ArrayList<String> pastMoves){
-
-        // These should be actually given rather then hardcoded
-        int last_Move_Start = 57, last_Move_End = 39;
+    public static Move possibleBlackPawnMoves(Board b, ArrayList<String> pastMoves){
 
         long BP = b.get(BitBoardEnum.BP);
         long capturablePieces = b.GetWhitePieces() ^ b.get(BitBoardEnum.WK);
@@ -491,7 +476,7 @@ public class MoveGenerator
         long blackPieces = b.GetBlackPieces();
         long empty = ~(blackPieces | whitePieces);
 
-        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+        Move move = new Move();
         String singleAlgebraicMove = "";
         long possibleMoves;
         long currPawn = b.get(BitBoardEnum.BP);
@@ -506,12 +491,6 @@ public class MoveGenerator
 
             //Capture right
             possibleMoves = possibleMoves | (currPawn << 7)&~files[7]&capturablePieces;
-
-            //Forward 1 square
-            possibleMoves = possibleMoves | (currPawn << 8)&~ranks[7]&empty;
-
-            //Forward 2 squares
-            possibleMoves = possibleMoves | (currPawn << 16)&empty&(empty >> 8) & ranks[4];
 
             if(pastMoves.size() >= 1){
 
@@ -530,6 +509,15 @@ public class MoveGenerator
                     
                 }
             }
+            
+            move.setBitBoard(possibleMoves);
+
+            //Forward 1 square
+            possibleMoves = possibleMoves | (currPawn << 8)&~ranks[7]&empty;
+
+            //Forward 2 squares
+            possibleMoves = possibleMoves | (currPawn << 16)&empty&(empty >> 8) & ranks[4];
+
 
             //Gets a SINGLE possible move
             long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
@@ -542,7 +530,7 @@ public class MoveGenerator
 
                 singleAlgebraicMove = "" + fileToChar(pawnLocation%8) + (8 - pawnLocation/8)
                                          + fileToChar(index%8) + (8 - index/8);
-                algebraicLegalMoves.add(singleAlgebraicMove);
+                move.addAlg(singleAlgebraicMove);
 
                 //We processed a possible move, so remove a single possible move from possible moves
                 possibleMoves = possibleMoves & ~singlePossibleMove;
@@ -554,7 +542,7 @@ public class MoveGenerator
             BP &= ~currPawn;
             currPawn = BP & ~(BP-1);
         }
-        return algebraicLegalMoves;
+        return move;
     }
 
     private static long generateVerticalHorizontalMoves(Board board, int startSquare){

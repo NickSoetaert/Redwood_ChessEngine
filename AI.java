@@ -33,8 +33,9 @@ public class AI
 
         if (ismax)
         {
-            int best = -1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history);
+
+            int best = 1000;
+            ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history).getAlg();
 
             for (int i = 0; i < childMoves.size(); ++i)
             {
@@ -47,8 +48,8 @@ public class AI
         }
         else
         {
-            int best = 1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history);
+            int best = -1000;
+            ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history).getAlg();
 
             for (int i = 0; i < childMoves.size(); ++i)
             {
@@ -77,7 +78,7 @@ public class AI
         if (ismax)
         {
             int best = -1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history);
+            ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history).getAlg();
 
             for (int i = 0; i < childMoves.size(); ++i)
             {
@@ -90,7 +91,7 @@ public class AI
         else
         {
             int best = 1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history);
+            ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history).getAlg();
 
             for (int i = 0; i < childMoves.size(); ++i)
             {
@@ -113,12 +114,12 @@ public class AI
         if (color == "White")
         {
             BestScore = -2000;
-            childMoves = MoveGenerator.possibleWhiteMoves(board, history);
+            childMoves = MoveGenerator.possibleWhiteMoves(board, history).getAlg();
         }
         else
         {
             BestScore = 2000;
-            childMoves = MoveGenerator.possibleBlackMoves(board, history);
+            childMoves = MoveGenerator.possibleBlackMoves(board, history).getAlg();
         }
 
         for (int i = 0; i < childMoves.size(); ++i)

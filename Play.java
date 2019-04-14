@@ -11,8 +11,8 @@ public class Play{
         board.eval();
 
         ArrayList<String> pastMoves = new ArrayList<>();
-        ArrayList<String> whiteMoves = MoveGenerator.possibleWhiteMoves(board, pastMoves);
-        ArrayList<String> blackMoves = MoveGenerator.possibleBlackMoves(board, pastMoves);
+        ArrayList<String> whiteMoves = MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg();
+        ArrayList<String> blackMoves = MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg();
 
         System.out.println("~~~" + whiteMoves);
         System.out.println("~~~" + blackMoves);
