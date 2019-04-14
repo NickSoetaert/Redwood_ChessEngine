@@ -378,7 +378,7 @@ public class MoveGenerator
                     //en passant from right
                     possibleMoves = possibleMoves | ((((currPawn>>1)&b.get(BitBoardEnum.BP)&ranks[4]&(files[Board.getFile(prev[0])])))>>8);
                     //BoardGenerator.drawPiece(files[Board.getFile(prev[0])]);
-                    //System.out.println("prev[0] = " + Board.getFile(prev[0]));
+                    //System.out.println(files[0]);
                     
                     //en passant from left
 
