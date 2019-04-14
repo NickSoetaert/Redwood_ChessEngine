@@ -101,119 +101,130 @@ public class Board
         }
     }
 
+    public void move(String UCIin)
+    {
+        int movevals[] = Board.UCItoIndex(UCIin);
+        this.move(movevals[0], movevals[1]);
+        System.out.println(movevals[0]);
+        System.out.println(movevals[1]);
+
+    }
+
 
     // moves a peice on local board
     public void move(int startIndex,int finishIndex)
     {
 
+        BitBoardEnum taken = getPeiceType(finishIndex);
+        BitBoardEnum moved = getPeiceType(startIndex);
+        System.out.println(taken + ", " + moved);
         // flipps bits on origin and destination bits
-        switch(getPeiceType(startIndex))
+        switch(moved)
         {
             case WP:
-                WP = WP ^ (1<<startIndex);
-                WP = WP ^ (1<<finishIndex);
+                WP = WP ^ (1L <<(startIndex));
+                WP = WP ^ (1L <<(finishIndex));
                 break;
             case WN:
-                WN = WN ^ (1<<startIndex);
-                WN = WN ^ (1<<finishIndex);
+                WN = WN ^ (1L<<(startIndex));
+                WN = WN ^ (1L<<(finishIndex));
                 break;
             case WB:
-                WB = WB ^ (1<<startIndex);
-                WB = WB ^ (1<<finishIndex);
+                WB = WB ^ (1L<<(startIndex));
+                WB = WB ^ (1L<<(finishIndex));
                 break;
             case WR:
-                WR = WR ^ (1<<startIndex);
-                WR = WR ^ (1<<finishIndex);                
+                WR = WR ^ (1L<<(startIndex));
+                WR = WR ^ (1L<<(finishIndex));                
                 break;
             case WQ:
-                WQ = WQ ^ (1<<startIndex);
-                WQ = WQ ^ (1<<finishIndex);                
+                WQ = WQ ^ (1L<<(startIndex));
+                WQ = WQ ^ (1L<<(finishIndex));                
                 break;
             case WK:
-                WK = WK ^ (1<<startIndex);
-                WK = WK ^ (1<<finishIndex);                
+                WK = WK ^ (1L<<(startIndex));
+                WK = WK ^ (1L<<(finishIndex));                
                 break;
             case BP:
-                BP = BP ^ (1<<startIndex);
-                BP = BP ^ (1<<finishIndex);                
+                BP = BP ^ (1L<<(startIndex));
+                BP = BP ^ (1L<<(finishIndex));                
                 break;
             case BN:
-                BN = BN ^ (1<<startIndex);
-                BN = BN ^ (1<<finishIndex);                
+                BN = BN ^ (1L<<(startIndex));
+                BN = BN ^ (1L<<(finishIndex));                
                 break;
             case BB:
-                BB = BB ^ (1<<startIndex);
-                BB = BB ^ (1<<finishIndex);                
+                BB = BB ^ (1L<<(startIndex));
+                BB = BB ^ (1L<<(finishIndex));                
                 break;
             case BR:
-                BR = BR ^ (1<<startIndex);
-                BR = BR ^ (1<<finishIndex);                
+                BR = BR ^ (1L<<(startIndex));
+                BR = BR ^ (1L<<(finishIndex));                
                 break;
             case BQ:
-                BQ = BQ ^ (1<<startIndex);
-                BQ = BQ ^ (1<<finishIndex);                
+                BQ = BQ ^ (1L<<(startIndex));
+                BQ = BQ ^ (1L<<(finishIndex));                
                 break;
             case BK:
-                BK = BK ^ (1<<startIndex);
-                BK = BK ^ (1<<finishIndex);                
+                BK = BK ^ (1L<<(startIndex));
+                BK = BK ^ (1L<<(finishIndex));                
                 break;
             default:
                 break;  
         }
 
         // If a peice is captured by this move it is removed from its board
-        BitBoardEnum taken = getPeiceType(finishIndex);
         if (taken != null)
         {
-            switch(getPeiceType(finishIndex))
+            switch(taken)
             {
                 case WP:
                     if (((WP>>finishIndex)&1) == 1)
-                        WP = WP ^ (1<<finishIndex);
+                        WP = WP ^ (1L<<(finishIndex));
                     break;
                 case WN:
                     if (((WN>>finishIndex)&1) == 1)
-                        WN = WN ^ (1<<finishIndex);
+                        WN = WN ^ (1L<<(finishIndex));
                     break;
                 case WB:
                     if (((WB>>finishIndex)&1) == 1)
-                        WB = WB ^ (1<<finishIndex);
+                        WB = WB ^ (1L<<(finishIndex));
                     break;
                 case WR:
                     if (((WR>>finishIndex)&1) == 1)
-                        WR = WR ^ (1<<finishIndex);                
+                        WR = WR ^ (1L<<(finishIndex));                
                     break;
                 case WQ:
                     if (((WQ>>finishIndex)&1) == 1)
-                        WQ = WQ ^ (1<<finishIndex);                
+                        WQ = WQ ^ (1L<<(finishIndex));                
                     break;
                 case WK:
                     if (((WK>>finishIndex)&1) == 1)
-                        WK = WK ^ (1<<finishIndex);                
+                        WK = WK ^ (1L<<(finishIndex));                
                     break;
                 case BP:
                     if (((BP>>finishIndex)&1) == 1)
-                        BP = BP ^ (1<<finishIndex);                
+                        BP = BP ^ (1L<<(finishIndex));                
                     break;
                 case BN:
                     if (((BN>>finishIndex)&1) == 1)
-                        BN = BN ^ (1<<finishIndex);                
+                        BN = BN ^ (1L<<(finishIndex));                
                     break;
                 case BB:
                     if (((BB>>finishIndex)&1) == 1)
-                        BB = BB ^ (1<<finishIndex);                
+                        BB = BB ^ (1L<<(finishIndex));                
                     break;
                 case BR:
                     if (((BR>>finishIndex)&1) == 1)
-                        BR = BR ^ (1<<finishIndex);                
+                        BR = BR ^ (1L<<(finishIndex));                
                     break;
                 case BQ:
                     if (((BQ>>finishIndex)&1) == 1)
-                        BQ = BQ ^ (1<<finishIndex);                
+                        BQ = BQ ^ (1L<<(finishIndex));                
                     break;
                 case BK:
                     if (((BK>>finishIndex)&1) == 1)
-                        BK = BK ^ (1<<finishIndex);                
+                        BK = BK ^ (1L<<(finishIndex));                
                     break;
                 default:
                     break;  
@@ -246,18 +257,18 @@ public class Board
 
     public BitBoardEnum getPeiceType(int i)
     {
-        if(((WP>>i) & 1) == 1) {return BitBoardEnum.WP;}
-        if(((WN>>i) & 1) == 1) {return BitBoardEnum.WN;}
-        if(((WB>>i) & 1) == 1) {return BitBoardEnum.WB;}
-        if(((WR>>i) & 1) == 1) {return BitBoardEnum.WR;}
-        if(((WQ>>i) & 1) == 1) {return BitBoardEnum.WQ;}
-        if(((WK>>i) & 1) == 1) {return BitBoardEnum.WK;}
-        if(((BP>>i) & 1) == 1) {return BitBoardEnum.BP;}
-        if(((BN>>i) & 1) == 1) {return BitBoardEnum.BN;}
-        if(((BB>>i) & 1) == 1) {return BitBoardEnum.BB;}
-        if(((BR>>i) & 1) == 1) {return BitBoardEnum.BR;}
-        if(((BQ>>i) & 1) == 1) {return BitBoardEnum.BQ;}
-        if(((BK>>i) & 1) == 1) {return BitBoardEnum.BK;}
+        if(((WP>>(i)) & 1) == 1) {return BitBoardEnum.WP;}
+        if(((WN>>(i)) & 1) == 1) {return BitBoardEnum.WN;}
+        if(((WB>>(i)) & 1) == 1) {return BitBoardEnum.WB;}
+        if(((WR>>(i)) & 1) == 1) {return BitBoardEnum.WR;}
+        if(((WQ>>(i)) & 1) == 1) {return BitBoardEnum.WQ;}
+        if(((WK>>(i)) & 1) == 1) {return BitBoardEnum.WK;}
+        if(((BP>>(i)) & 1) == 1) {return BitBoardEnum.BP;}
+        if(((BN>>(i)) & 1) == 1) {return BitBoardEnum.BN;}
+        if(((BB>>(i)) & 1) == 1) {return BitBoardEnum.BB;}
+        if(((BR>>(i)) & 1) == 1) {return BitBoardEnum.BR;}
+        if(((BQ>>(i)) & 1) == 1) {return BitBoardEnum.BQ;}
+        if(((BK>>(i)) & 1) == 1) {return BitBoardEnum.BK;}
         return null;
     }
 
@@ -266,8 +277,23 @@ public class Board
     {
         int returnArray[] = new int[2];
 
-        returnArray[0] = Math.abs(((int)'a') - (int)UCI.charAt(0)) + (8 * (UCI.charAt(1) - '0'));
-        returnArray[1] = (((int)UCI.charAt(2) - (int)'a')) + (8 * (UCI.charAt(3)-'0'));
+        //returnArray[0] = 63 - ('h' - UCI.charAt(0) + (8 * (UCI.charAt(1)-'1')));
+
+        returnArray[0] = 8*(UCI.charAt(1)-'1');
+        returnArray[0] += 'h' - (UCI.charAt(0));
+        returnArray[0] = 63 - returnArray[0];
+        System.out.println("issue");
+        System.out.println(UCI.charAt(0));
+        System.out.println((int)'a');
+        System.out.println('h' - UCI.charAt(0));
+        System.out.println(Integer.toString(returnArray[0]));
+        System.out.println();
+        
+
+        returnArray[1] = 8*(UCI.charAt(3)-'1');
+        returnArray[1] += 'h' - (UCI.charAt(2));
+        returnArray[1] = 63 - returnArray[1];
+        System.out.println(Integer.toString(returnArray[1]));
 
 
         return returnArray;
@@ -277,23 +303,28 @@ public class Board
     {
         String UCIout = "";
         UCIout = UCIout.concat(String.valueOf((char)( (int)'a' + getFile(firstIndex))));
-        UCIout = UCIout.concat(String.valueOf((getRank(firstIndex))));
+        UCIout = UCIout.concat(String.valueOf((getRank(firstIndex)+1)));
         UCIout = UCIout.concat(String.valueOf((char)( (int)'a' + getFile(LastIndex))));
-        UCIout = UCIout.concat(String.valueOf((getRank(LastIndex))));
+        UCIout = UCIout.concat(String.valueOf((getRank(LastIndex)+1)));
 
         return UCIout;
     }
 
     public static int getRank(int Index)
     {
-        return 8 - (Index / 8);
+        return 7 - (Index / 8);
     }
     public static int getFile(int Index)
     {
         return Index % 8;
     }
 
+    // will return centapawn notation
+    public int eval()
+    {
+        return 0;
+    }
 
-
+    
 
 }
