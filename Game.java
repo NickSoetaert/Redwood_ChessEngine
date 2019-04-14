@@ -28,6 +28,11 @@ public class Game
         int i = 0;
         while(i < 100000)
         {
+            int z = 0;
+            for (String s : pastMoves){
+                System.out.println(z + " " + s);
+                z++;
+            }
             if (AIturn == curTurn)
             {
                 BoardGenerator.drawBoard(board);
