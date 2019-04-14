@@ -7,6 +7,9 @@ public class Play{
 
         Board board = BoardGenerator.initStandardBoard();
 
+
+        board.eval();
+
         ArrayList<String> pastMoves = new ArrayList<>();
         ArrayList<String> whiteMoves = MoveGenerator.possibleWhiteMoves(board, pastMoves);
         ArrayList<String> blackMoves = MoveGenerator.possibleBlackMoves(board, pastMoves);
@@ -14,12 +17,15 @@ public class Play{
         System.out.println("~~~" + whiteMoves);
         System.out.println("~~~" + blackMoves);
 
+
+        BoardGenerator.getBoardKey();
+
         //Game g = new Game();
 
         //g.PlayDumbieGame();
     
-        Game g = new Game();
-        g.PlayDumbieGame();
+        //Game g = new Game();
+        //g.PlayDumbieGame();
         
     }
 }

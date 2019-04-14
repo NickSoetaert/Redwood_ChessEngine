@@ -111,10 +111,14 @@ public class MoveGenerator
         }
 
        temp = possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.WQ)); 
-       for(String s : temp){
+        for(String s : temp){
            legalMoves.add(s);
         }
 
+        temp = possibleKingMoves(board, uncapturablePieces, board.get(BitBoardEnum.WK));
+        for(String s : temp){
+            legalMoves.add(s);
+        }
         return legalMoves;
     }
 
@@ -144,11 +148,17 @@ public class MoveGenerator
             legalMoves.add(s);
         }
 
-       temp = possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.BQ));
-       for(String s : temp){
+        temp = possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.BQ));
+        for(String s : temp){
            legalMoves.add(s);
         }
 
+        temp = possibleKingMoves(board, uncapturablePieces, board.get(BitBoardEnum.BK));
+        for(String s : temp){
+            legalMoves.add(s);
+        }
+
+        System.out.println("Legal black moves: " + legalMoves);
         return legalMoves;
     }
 
@@ -332,6 +342,62 @@ public class MoveGenerator
         }
         return algebraicLegalMoves;
     }
+
+    public static ArrayList<String> possibleKingMoves(Board b, long uncapturablePieces, long K){
+    
+        ArrayList<String> algebraicLegalMoves = new ArrayList<String>();
+        String singleAlgebraicMove = "";
+
+        long kingMoveShape = 460039L;
+        long possibleMoves;
+        long currKing = K;
+        currKing=K&~(K-1); //Gets FIRST occurance of a king
+
+        int kingLocation = Long.numberOfTrailingZeros(currKing);
+
+        //9 represents the c6 square, furthest in the corner the king can move safely up and to the left
+        if (kingLocation>9)
+        {
+            //we are safe to shift right(and down)
+            possibleMoves = kingMoveShape<<(kingLocation-9);
+        }
+        else {
+            possibleMoves = kingMoveShape>>(9-kingLocation);
+        }
+
+        if(kingLocation % 8 < 4){
+            //Take away moves that wrapped around the board, or land on uncapable pieces
+            possibleMoves = possibleMoves & ~(files[7]);
+            possibleMoves = possibleMoves & ~uncapturablePieces;
+        }
+        else {
+            //Take away moves that wrapped around the board, or land on uncapable pieces
+            possibleMoves = possibleMoves & ~(files[0]);
+            possibleMoves = possibleMoves & ~uncapturablePieces;
+        }
+
+        long singlePossibleMove = possibleMoves & ~(possibleMoves-1);
+        while (singlePossibleMove != 0)
+        {
+            int index = Long.numberOfTrailingZeros(singlePossibleMove);
+
+            singleAlgebraicMove = "" + fileToChar(kingLocation%8) + (8 - kingLocation/8)
+                                        + fileToChar(index%8) + (8 - index/8);
+            algebraicLegalMoves.add(singleAlgebraicMove);
+
+            //We processed a possible move, so remove a single possible move from possible moves
+            possibleMoves = possibleMoves & ~singlePossibleMove;
+            //and set single possible move to next possible move
+            singlePossibleMove = possibleMoves & ~(possibleMoves-1);
+        }
+        //update current king to the next king
+        K&=~currKing;
+        currKing=K&~(K-1);
+        
+        return algebraicLegalMoves; 
+    }
+
+
 
     public static ArrayList<String> possibleWhitePawnMoves(Board b, ArrayList<String> pastMoves){
 
