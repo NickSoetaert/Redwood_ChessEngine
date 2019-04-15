@@ -145,7 +145,7 @@ public class AI
                     best_move = childMoves.get(i);
                 }
             }
-            System.out.println("most choice " + i + " of  " + childMoves.size() + "current best evaluated to be : " + BestScore);
+            //System.out.println("most choice " + i + " of  " + childMoves.size() + "current best evaluated to be : " + BestScore);
 
         }
 

@@ -119,8 +119,8 @@ public class Board
     {
         BitBoardEnum taken = getPeiceType(finishIndex);
         BitBoardEnum moved = getPeiceType(startIndex);
-        pastMoves.add(IndexToUCI(startIndex, finishIndex));
-        takenHistory.add(taken);
+        //pastMoves.add(IndexToUCI(startIndex, finishIndex));
+        //takenHistory.add(taken);
         // flipps bits on origin and destination bits
         switch(moved)
         {

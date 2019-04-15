@@ -5,10 +5,11 @@ public class Play{
 
         System.out.println("Hello World!");
 
+        
         Board board = BoardGenerator.initStandardBoard();
-
-
+        BoardGenerator.drawBoard(board);
         board.eval();
+        
 
         ArrayList<String> pastMoves = new ArrayList<>();
         ArrayList<String> whiteMoves = MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg();

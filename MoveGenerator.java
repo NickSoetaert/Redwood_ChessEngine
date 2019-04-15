@@ -88,9 +88,9 @@ public class MoveGenerator
 
         Move move = new Move();
 
-        long uncapturablePieces = board.GetWhitePieces() | board.get(BitBoardEnum.BK);
+        long uncapturablePieces = board.GetWhitePieces();// | board.get(BitBoardEnum.BK);
 
-        move.combine(possibleBlackPawnMoves(board, pastMoves));
+        move.combine(possibleWhitePawnMoves(board, pastMoves));
         move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.WN)));
         move.combine(possibleBishopMoves(board, uncapturablePieces, board.get(BitBoardEnum.WB)));
         move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.WR)));
@@ -104,7 +104,7 @@ public class MoveGenerator
 
         Move move = new Move();
 
-        long uncapturablePieces = board.GetBlackPieces() | board.get(BitBoardEnum.WK);
+        long uncapturablePieces = board.GetBlackPieces();// | board.get(BitBoardEnum.WK);
 
         move.combine(possibleBlackPawnMoves(board, pastMoves));
         move.combine(possibleKnightMoves(board, uncapturablePieces, board.get(BitBoardEnum.BN)));
