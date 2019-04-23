@@ -3,8 +3,9 @@ import java.util.ArrayList;
 public class Board
 {   
     private long WP=0L, WN=0L, WB=0L, WR=0L, WQ=0L, WK=0L, BP=0L, BN=0L, BB=0L, BR=0L, BQ=0L, BK=0L;
-    private ArrayList<BitBoardEnum> takenHistory;
+
     public ArrayList<String> pastMoves = new ArrayList<>();
+    public int movesSincePawnPushOrCapture = 0;
 
     // constructor
     public Board(long WP,long WN,long WB,long WR,long WQ,long WK,long BP,long BN,long BB,long BR,long BQ,long BK)

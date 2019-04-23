@@ -3,25 +3,85 @@ import java.util.ArrayList;
 
 public class Game
 {
-    public AI OurGuy;
-
-
-    //~!~!~!~!~!~!~!~!~!~!~!~
+    //public AI OurGuy;
     public ArrayList<String> pastMoves = new ArrayList<>();
 
+    //robot vs robot
+    public void RobotDuel(){
+
+        Scanner scanner = new Scanner(System.in);
+        Board board = BoardGenerator.initStandardBoard();
+        AI whiteRobot = new AI(ColorBool.WHITE, board);
+        AI blackRobot = new AI(ColorBool.BLACK, board);
+        Turn whoseTurn = new Turn(ColorBool.WHITE);
+
+        //boolean Watchable = false;
+
+        int Sleep_Time = 2000;
+        String advisedAction = "NOT INITIATED";
 
 
-    public void PlayDumbieGame()
+        // while (!CheckMate)
+        int i = 0;
+        while(i < 1000000)
+        {
+
+            if (AIturn == curTurn)
+            {
+
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",6);
+                OurGuy.act(advisedAction);
+                curTurn = userTurn;
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("WHITE AI action : ".concat(advisedAction));
+                BoardGenerator.drawBoard(board);
+                if (Watchable)
+                {
+                    try
+                    {
+                        Thread.sleep(Sleep_Time);
+                    }
+                    catch(InterruptedException ex)
+                    {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+            else
+            {
+
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",6);
+                OurGuy.act(advisedAction);
+                curTurn = AIturn;
+                System.out.println(OurGuy.ConfidenceinLastMove);
+                System.out.println("BLACK AI action : ".concat(advisedAction));
+                BoardGenerator.drawBoard(board);
+                if (Watchable)
+                {
+                    try
+                    {
+                        Thread.sleep(Sleep_Time);
+                    }
+                    catch(InterruptedException ex)
+                    {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+            i++;
+        }
+    }
+
+    public void PlayGame()
     {
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
         OurGuy = new AI(board);
         Turn curTurn = Turn.WHITE;
         String UCIinput;
-        Turn AIturn = Turn.WHITE;
-        Turn userTurn = Turn.BLACK;
-        String advisedAction = "noneTaken";
-
+        Turn AIturn;// = Turn.WHITE;
+        Turn userTurn;// = Turn.BLACK;
+        String advisedAction = "noneTaken";//rename
 
         // while (!CheckMate)
         int i = 0;
@@ -82,7 +142,7 @@ public class Game
             if (AIturn == curTurn)
             {
 
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",4);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",6);
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
@@ -103,7 +163,7 @@ public class Game
             else
             {
 
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",4);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",6);
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
@@ -125,4 +185,5 @@ public class Game
         }
         scanner.close();
     }
+
 }

@@ -29,8 +29,6 @@ public class MoveGenerator
         -9187201950435737472L
     };
 
-
-
     // diaginal masks from top left to bottom right
     static long diaginalMasks[] = {
         1L,                     //a8-a8
@@ -70,19 +68,7 @@ public class MoveGenerator
         72057594037927936L      //a1-a1
     };
 
-    private static char fileToChar(int file){
-        switch(file){
-            case 0: return 'a';
-            case 1: return 'b';
-            case 2: return 'c';
-            case 3: return 'd';
-            case 4: return 'e';
-            case 5: return 'f';
-            case 6: return 'g';
-            case 7: return 'h';
-            default: return ' ';
-        }
-    }
+
 
     public static Move possibleWhiteMoves(Board board, ArrayList<String> pastMoves){
 
@@ -115,7 +101,19 @@ public class MoveGenerator
 
         return move;
     }
-
+    private static char fileToChar(int file){
+        switch(file){
+            case 0: return 'a';
+            case 1: return 'b';
+            case 2: return 'c';
+            case 3: return 'd';
+            case 4: return 'e';
+            case 5: return 'f';
+            case 6: return 'g';
+            case 7: return 'h';
+            default: return ' ';
+        }
+    }
     public static long getSafeKingSquares(Board board, String color){
         if(color == "white"){
             Move move = new Move();
@@ -126,6 +124,7 @@ public class MoveGenerator
             move.combine(possibleRookMoves(board, uncapturablePieces, board.get(BitBoardEnum.WR)));
             move.combine(possibleQueenMoves(board, uncapturablePieces, board.get(BitBoardEnum.WQ)));
             return move.getBitBoard();
+            
         } else {
             Move move = new Move();
             long uncapturablePieces = board.GetBlackPieces() | board.get(BitBoardEnum.WK);

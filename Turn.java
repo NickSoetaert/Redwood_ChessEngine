@@ -1,1 +1,0 @@
-public enum Turn {BLACK, WHITE}

@@ -1,0 +1,17 @@
+TODO.txt
+
+Critical (basic rules of chess):
+    -recognize checkmate
+    -recgognize stalemate
+    -castle kingside
+    -castle queenside
+    -pawn promotion to any legal piece (knight, bishop, rook or queen)
+
+On deck:
+    -3 move repitition
+    -50 move draw
+    -stronger eval function
+
+In the hole (DO NOT work on these until earlier are done):
+    -Optimize
+    
