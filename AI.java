@@ -67,95 +67,17 @@ public class AI
         }
     }
 
-    public int minmaxBlack(Board board, int depth, int maxDepth, ArrayList<String> history,Boolean ismax)
-    {
-        //System.out.println("Depth at : "+ depth + " of max " + maxDepth);
-        //System.out.println(depth >= maxDepth);
-        if (depth >= maxDepth)
-        {
-            //System.out.println("Returning!@!@!@!@!");
-            return board.eval();
-        }
+    public String findBestMove(Board board, ColorBool playerColor, int maxDepth){
+        String bestMove = "No best move found!";
 
-        if (ismax)
-        {
 
-            int best = 1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history).getAlg();
 
-            for (int i = 0; i < childMoves.size(); ++i)
-            {
-                //Find a way to not need to init new board each time. "Undo" function?
-                //Should be very easy to find parent node in a tree...
-                //Probably better style than referencing a master list of moves
-                //(Only have to read 1 value instead of n values)
-                
-                best = Math.max(best, minmaxBlack(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history,ismax));
-                depth += 1; //depth should equal zero first pass through
-            }
-            return best;
-        }
-        else
-        {
-            int best = -1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history).getAlg();
-
-            for (int i = 0; i < childMoves.size(); ++i)
-            {
-                // In an ideal world we would make an undo fucntion that can undo a move 
-
-                depth += 1;
-                best = Math.min(best, minmaxBlack(board.newBoardMove(childMoves.get(i)), depth, maxDepth, history,ismax));
-            }
-            return best;
-        }
+        return bestMove;
     }
 
-    public int minmaxWhite(Board board, int depth, int maxDepth, ArrayList<String> history, boolean ismax)
+    public String findBestMoveOld(Board board,int depthMax, ArrayList<String> history, String color)
     {
-
-        //System.out.println("Depth at : "+ depth + " of max " + maxDepth);
-        //System.out.println(depth >= maxDepth);
-        if (depth >= maxDepth)
-        {
-            //System.out.println("deepest score of : " + board.eval());
-            return board.eval();
-        }
-
-        
-
-        if (ismax)
-        {
-            int best = -1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleWhiteMoves(board, history).getAlg();
-
-            for (int i = 0; i < childMoves.size(); ++i)
-            {
-                // In an ideal world we would make an undo fucntion that can undo a move 
-                //depth += 1;
-                best = Math.max(best, minmaxWhite(board.newBoardMove(childMoves.get(i)), depth+1, maxDepth, history,!ismax));
-            }
-            return best;
-        }
-        else
-        {
-            int best = 1000;
-            ArrayList<String> childMoves = MoveGenerator.possibleBlackMoves(board, history).getAlg();
-
-            for (int i = 0; i < childMoves.size(); ++i)
-            {
-                // In an ideal world we would make an undo fucntion that can undo a move 
-
-                //depth += 1;
-                best = Math.min(best, minmaxWhite(board.newBoardMove(childMoves.get(i)), depth+1, maxDepth, history,!ismax));
-            }
-            return best;
-        }
-    }
-
-    public String findBestMove(Board board,int depthMax, ArrayList<String> history, String color)
-    {
-        String best_move = "There is None";
+        String best_move = "There is no best move";
         int BestScore;        
         int temp_score;
         ArrayList<String> childMoves;

@@ -9,12 +9,10 @@ public class Game
     //robot vs robot
     public void RobotDuel(){
 
-        Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
         AI robot = new AI(ColorBool.WHITE, board); //changes its own color move on move to move
-        ColorBool whoseTurn = ColorBool.WHITE;
 
-        boolean slowDownMoves = false; //set to true to use sleep for some debug purposes
+        boolean slowDownMoves = true; //set to true to use sleep for some debug purposes
         int Sleep_Time = 2000;
         String advisedAction = "NOT INITIATED";
 
@@ -23,7 +21,7 @@ public class Game
         int i = 0;
         while(i < 1000000){
 
-            //advisedAction = robot.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(), robot.getColor(),6);
+            advisedAction = robot.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(), robot.getColor(),6);
             //robot.act(advisedAction);
             robot.flipColor();
             System.out.println(robot.ConfidenceinLastMove);
