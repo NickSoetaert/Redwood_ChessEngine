@@ -1,17 +1,28 @@
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Math;
 
 public class AI
 {
     public Board currentGame;
     public ColorBool color;
     //private float WhiteTime,BlackTime;
-    //UCI takes care of time I think, could be wrong
+    //UCI takes care of time I think
     
-    private int boardEval = 0;
-
     public String ConfidenceinLastMove; //unclear name
+
+    public ColorBool getColor(){
+        return this.color; 
+    }
+
+    public void flipColor(){
+        if(this.color == ColorBool.WHITE){
+            this.color = ColorBool.BLACK;
+        } else {
+            this.color = ColorBool.WHITE;
+        }
+    }
     
     public AI(ColorBool c, Board currentGame)
     {
@@ -20,26 +31,39 @@ public class AI
         this.currentGame = currentGame;
     }
 
-    public String Think(ArrayList<String> moves, ColorBool WhoIsThinking, int depth)
-    {
-        return FindBestMove(currentGame, depth,new ArrayList<String>(), WhoIsThinking.color);
-    }
     public void act(String action)
     {
         currentGame.move(action);
     }
 
     public int minMax(Board board, int depth, ColorBool playerColor, int maxDepth){
+        ArrayList<String> pastMoves = new ArrayList<>();
         if(depth == 0){
-            return boardEval;
-        } else {
-            //negative infinity
-            boardEval = -999999;
-            for(String m : moves){
-                maxEval = max(boardEval, m.eval);
+            return board.eval();
+        } 
+        if(playerColor == ColorBool.WHITE){
+            int maxEval = -10000;
+            Move possibleMoves = new Move(); 
+            possibleMoves = MoveGenerator.possibleWhiteMoves(board, pastMoves);
+            for(String m : possibleMoves.getAlg()){
+                maxEval = minMax(board, depth-1, ColorBool.BLACK, maxDepth);
+                board.move(m);
+                maxEval = Math.max(maxEval, board.eval());
             }
+            return maxEval;
 
-            return 0;
+        }
+        else{
+            int minEval = 10000;
+            Move possibleMoves = new Move();
+            possibleMoves = MoveGenerator.possibleBlackMoves(board, pastMoves);
+            for(String m : possibleMoves.getAlg()){
+                minEval = minMax(board, depth-1, ColorBool.WHITE, maxDepth);
+                board.move(m);
+                minEval = Math.min(minEval, board.eval());
+            }
+            return minEval;
+
         }
     }
 
@@ -129,7 +153,7 @@ public class AI
         }
     }
 
-    public String FindBestMove(Board board,int depthMax, ArrayList<String> history, String color)
+    public String findBestMove(Board board,int depthMax, ArrayList<String> history, String color)
     {
         String best_move = "There is None";
         int BestScore;        

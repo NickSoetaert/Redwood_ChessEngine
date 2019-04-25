@@ -11,76 +11,50 @@ public class Game
 
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
-        AI whiteRobot = new AI(ColorBool.WHITE, board);
-        AI blackRobot = new AI(ColorBool.BLACK, board);
-        Turn whoseTurn = new Turn(ColorBool.WHITE);
+        AI robot = new AI(ColorBool.WHITE, board); //changes its own color move on move to move
+        ColorBool whoseTurn = ColorBool.WHITE;
 
-        //boolean Watchable = false;
-
+        boolean slowDownMoves = false; //set to true to use sleep for some debug purposes
         int Sleep_Time = 2000;
         String advisedAction = "NOT INITIATED";
 
 
         // while (!CheckMate)
         int i = 0;
-        while(i < 1000000)
-        {
+        while(i < 1000000){
 
-            if (AIturn == curTurn)
+            //advisedAction = robot.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(), robot.getColor(),6);
+            //robot.act(advisedAction);
+            robot.flipColor();
+            System.out.println(robot.ConfidenceinLastMove);
+
+            BoardGenerator.drawBoard(board);
+
+            if (slowDownMoves)
             {
-
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",6);
-                OurGuy.act(advisedAction);
-                curTurn = userTurn;
-                System.out.println(OurGuy.ConfidenceinLastMove);
-                System.out.println("WHITE AI action : ".concat(advisedAction));
-                BoardGenerator.drawBoard(board);
-                if (Watchable)
+                try
                 {
-                    try
-                    {
-                        Thread.sleep(Sleep_Time);
-                    }
-                    catch(InterruptedException ex)
-                    {
-                        Thread.currentThread().interrupt();
-                    }
+                    Thread.sleep(Sleep_Time);
+                }
+                catch(InterruptedException ex)
+                {
+                    Thread.currentThread().interrupt();
                 }
             }
-            else
-            {
-
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",6);
-                OurGuy.act(advisedAction);
-                curTurn = AIturn;
-                System.out.println(OurGuy.ConfidenceinLastMove);
-                System.out.println("BLACK AI action : ".concat(advisedAction));
-                BoardGenerator.drawBoard(board);
-                if (Watchable)
-                {
-                    try
-                    {
-                        Thread.sleep(Sleep_Time);
-                    }
-                    catch(InterruptedException ex)
-                    {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-            }
-            i++;
         }
+        i++;
+        
     }
-
+    /*
     public void PlayGame()
     {
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
         OurGuy = new AI(board);
-        Turn curTurn = Turn.WHITE;
+        ColorBool curTurn = ColorBool.WHITE;
         String UCIinput;
-        Turn AIturn;// = Turn.WHITE;
-        Turn userTurn;// = Turn.BLACK;
+        ColorBool AIturn;// = Turn.WHITE;
+        ColorBool userTurn;// = Turn.BLACK;
         String advisedAction = "noneTaken";//rename
 
         // while (!CheckMate)
@@ -120,17 +94,18 @@ public class Game
         }
         scanner.close();
     }
-
+    */
+    /*
     public void PlayAIDumbieGame()
     {
         Scanner scanner = new Scanner(System.in);
         Board board = BoardGenerator.initStandardBoard();
         OurGuy = new AI(board);
-        Turn curTurn = Turn.WHITE;
-        Turn AIturn = Turn.WHITE;
-        Turn userTurn = Turn.BLACK;
+        ColorBool curTurn = Turn.WHITE;
+        ColorBool AIturn = Turn.WHITE;
+        ColorBool userTurn = Turn.BLACK;
         boolean Watchable = false;
-        int Sleep_Time = 2000;
+        int sleepTime = 2000;
         String advisedAction = "noneTaken";
 
 
@@ -152,7 +127,7 @@ public class Game
                 {
                     try
                     {
-                        Thread.sleep(Sleep_Time);
+                        Thread.sleep(sleepTime);
                     }
                     catch(InterruptedException ex)
                     {
@@ -173,7 +148,7 @@ public class Game
                 {
                     try
                     {
-                        Thread.sleep(Sleep_Time);
+                        Thread.sleep(sleepTime);
                     }
                     catch(InterruptedException ex)
                     {
@@ -185,5 +160,6 @@ public class Game
         }
         scanner.close();
     }
+    */
 
 }
