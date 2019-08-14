@@ -5,6 +5,11 @@ public class Play{
 
         System.out.println("Hello World!");
 
+        BoardGenerator.getBoardKey();
+
+        BoardGenerator.drawPiece(1L);
+
+        
         Board board = BoardGenerator.initStandardBoard();
 
 
@@ -22,8 +27,9 @@ public class Play{
 
         BoardGenerator.drawBoard(board);
 
+        
+        
         Game g = new Game();
         g.PlayAIDumbieGame();
-        
     }
 }

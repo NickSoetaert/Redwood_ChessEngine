@@ -34,12 +34,8 @@ public class Game
             }
             if (AIturn == curTurn)
             {
-                System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves));
                 BoardGenerator.drawBoard(board);
-
-                //System.out.println(MoveGenerator.possibleWhiteMoves(board, pastMoves));
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(), "White", 3);
-
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",3);
                 OurGuy.act(advisedAction);
                 pastMoves.add(advisedAction);
                 curTurn = userTurn;
@@ -49,6 +45,7 @@ public class Game
                 BoardGenerator.drawBoard(board);
                 System.out.println(OurGuy.ConfidenceinLastMove);
                 System.out.println("WHITE AI action : ".concat(advisedAction));
+    
                 curTurn = AIturn;
                 System.out.println(curTurn.toString() + " user's turn, please type a move : ");
                 UCIinput = scanner.nextLine();
@@ -69,8 +66,8 @@ public class Game
         Turn curTurn = Turn.WHITE;
         Turn AIturn = Turn.WHITE;
         Turn userTurn = Turn.BLACK;
-        boolean Watchable = false;
-        int Sleep_Time = 2000;
+        boolean Watchable = true;
+        int Sleep_Time = 1000;
         String advisedAction = "noneTaken";
 
 
@@ -81,13 +78,12 @@ public class Game
 
             if (AIturn == curTurn)
             {
-
-                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",6);
+                BoardGenerator.drawBoard(board);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleWhiteMoves(board, pastMoves).getAlg(),"White",4);
                 OurGuy.act(advisedAction);
                 curTurn = userTurn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
                 System.out.println("WHITE AI action : ".concat(advisedAction));
-                BoardGenerator.drawBoard(board);
                 if (Watchable)
                 {
                     try
@@ -102,13 +98,12 @@ public class Game
             }
             else
             {
-
-                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",6);
+                BoardGenerator.drawBoard(board);
+                advisedAction = OurGuy.Think(MoveGenerator.possibleBlackMoves(board, pastMoves).getAlg(),"Black",4);
                 OurGuy.act(advisedAction);
                 curTurn = AIturn;
                 System.out.println(OurGuy.ConfidenceinLastMove);
                 System.out.println("BLACK AI action : ".concat(advisedAction));
-                BoardGenerator.drawBoard(board);
                 if (Watchable)
                 {
                     try
