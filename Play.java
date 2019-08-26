@@ -30,6 +30,6 @@ public class Play{
         
         
         Game g = new Game();
-        g.PlayAIDumbieGame();
+        g.PlayDumbieGame();
     }
 }

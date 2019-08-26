@@ -262,10 +262,14 @@ public class Board
         return newBoard;
     }
 
-    public Board newBoardMove(String UCIin)
+    public Board newBoardMove(String UCIin, ArrayList<String> history)
     {
 
         Board newBoard = new Board(WP, WN, WB, WR, WQ, WK,BP, BN, BB, BR, BQ, BK);
+        for (String movein : history)
+        {
+            newBoard.move(movein);
+        }
         newBoard.move(UCIin);  
         return newBoard;
     }
